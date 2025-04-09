@@ -1,0 +1,435 @@
+.manage-orders-page {
+  min-height: 100vh;
+  background: #111;
+}
+
+.orders-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+}
+
+.orders-main {
+  padding: 2.5rem;
+  overflow-y: auto;
+}
+
+.orders-header {
+  margin-bottom: 2.5rem;
+}
+
+.orders-header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 0 0 2rem;
+}
+
+.order-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: #ff3333;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.orders-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+}
+
+.search-bar {
+  flex: 1;
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #ff3333;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+}
+
+.filter-btn,
+.status-filter,
+.sort-filter {
+  padding: 1rem 1.5rem;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-btn:hover,
+.status-filter:hover,
+.sort-filter:hover {
+  border-color: #ff3333;
+}
+
+.orders-table {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #222;
+  color: #fff;
+  font-weight: 500;
+  text-align: left;
+  padding: 1.2rem;
+  border-bottom: 1px solid #333;
+}
+
+td {
+  padding: 1.2rem;
+  color: #fff;
+  border-bottom: 1px solid #222;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background: #1f1f1f;
+}
+
+.car-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.car-info img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.car-info h4 {
+  margin: 0 0 0.3rem;
+  color: #fff;
+}
+
+.price {
+  color: #ff3333;
+  font-weight: 500;
+}
+
+.buyer-info h4 {
+  margin: 0 0 0.3rem;
+  color: #fff;
+}
+
+.buyer-info span {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.order-date {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.date {
+  color: #fff;
+}
+
+.delivery {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+tr.completed .status-badge {
+  background: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+tr.processing .status-badge {
+  background: rgba(241, 196, 15, 0.1);
+  color: #f1c40f;
+}
+
+tr.pending .status-badge {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
+
+.status-icon {
+  font-size: 1.1rem;
+}
+
+.status-icon.completed {
+  color: #2ecc71;
+}
+
+.status-icon.processing {
+  color: #f1c40f;
+}
+
+.status-icon.pending {
+  color: #e74c3c;
+}
+
+.payment {
+  text-align: center;
+}
+
+.payment.paid span {
+  color: #2ecc71;
+}
+
+.payment.pending span {
+  color: #f1c40f;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.action-btn.view {
+  background: #222;
+  border: 1px solid #3498db;
+  color: #3498db;
+}
+
+.action-btn.view:hover {
+  background: #3498db;
+  color: #fff;
+}
+
+.action-btn.documents {
+  background: #222;
+  border: 1px solid #9b59b6;
+  color: #9b59b6;
+}
+
+.action-btn.documents:hover {
+  background: #9b59b6;
+  color: #fff;
+}
+
+.action-btn.update {
+  background: #222;
+  border: 1px solid #f1c40f;
+  color: #f1c40f;
+}
+
+.action-btn.update:hover {
+  background: #f1c40f;
+  color: #fff;
+}
+
+.action-btn.payment {
+  background: #222;
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+}
+
+.action-btn.payment:hover {
+  background: #2ecc71;
+  color: #fff;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.prev-page,
+.next-page {
+  padding: 0.8rem 1.5rem;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.prev-page:hover,
+.next-page:hover {
+  border-color: #ff3333;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-numbers button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.page-numbers button:hover {
+  border-color: #ff3333;
+}
+
+.page-numbers button.active {
+  background: #ff3333;
+  border-color: #ff3333;
+}
+
+.page-numbers span {
+  color: #666;
+}
+
+@media (max-width: 1400px) {
+  .order-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .orders-container {
+    grid-template-columns: 1fr;
+  }
+
+  .orders-controls {
+    flex-direction: column;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .filter-btn,
+  .status-filter,
+  .sort-filter {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .orders-table {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 1000px;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    flex: 1;
+  }
+}

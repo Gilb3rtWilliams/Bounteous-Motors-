@@ -1,0 +1,75 @@
+.customer-slideshow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+    background-color: #000;
+  }
+    
+    .customer-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .customer-slide.active {
+      opacity: 1;
+    }
+    
+    .customer-slide::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.7) 50%,
+        rgba(0, 0, 0, 0.8) 100%
+      );
+    }
+    
+    .customer-slide-indicators {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+    
+    .customer-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .customer-indicator.active {
+      background: #e60000;
+      border-color: #e60000;
+    }
+    
+    .customer-indicator:hover {
+      background: #e60000;
+      border-color: #e60000;
+    }
+    
