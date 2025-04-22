@@ -16,7 +16,6 @@
   position: relative;
   z-index: 1;
   color: white;
-  background: none;
 }
 
 /* Content Styling */
@@ -180,10 +179,15 @@ section h2 {
 .features-section .feature-item h3 {
   color: red;
   margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .features-section .feature-item p {
   color: white;
+  line-height: 1.6;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1rem;
 }
 
 /* About Section */

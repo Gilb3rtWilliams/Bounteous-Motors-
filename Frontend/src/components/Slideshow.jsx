@@ -14,7 +14,17 @@ const Slideshow = () => {
     '/src/images/slide7.jpg',
     '/src/images/slide8.jpg',
     '/src/images/slide9.jpg',
-    '/src/images/slide10.jpg'
+    '/src/images/slide10.jpg',
+    '/src/images/slide31.jpg',
+    '/src/images/slide32.jpg',
+    '/src/images/slide33.jpg',
+    '/src/images/slide34.jpg',
+    '/src/images/slide35.jpg',
+    '/src/images/slide36.jpg',
+    '/src/images/slide37.jpg',
+    '/src/images/slide38.jpg',
+    '/src/images/slide39.jpg',
+    '/src/images/slide40.jpg'
   ];
 
   useEffect(() => {

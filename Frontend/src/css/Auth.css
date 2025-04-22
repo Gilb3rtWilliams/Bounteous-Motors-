@@ -64,6 +64,12 @@
   letter-spacing: -0.5px;
   line-height: 1.2;
 }
+.auth-form-container h4 {
+  text-align: center;
+  color: red;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
 
 .auth-form {
   display: flex;

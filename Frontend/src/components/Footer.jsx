@@ -22,9 +22,9 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Contact Info</h3>
           <ul>
-            <li>📍 123 Car Street, Auto City</li>
-            <li>📞 +1 234 567 8900</li>
-            <li>✉️ info@bunteousmotors.com</li>
+            <li>📍 Roaster, Thika Rd Nairobi, Kenya</li>
+            <li>📞 +254 722 123456</li>
+            <li>✉️ info@bounteousmotors.com</li>
           </ul>
         </div>
 

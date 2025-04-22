@@ -34,54 +34,42 @@ const getCarById = asyncHandler(async (req, res) => {
   }
 });
 
-// Create a new car listing (Admin only)
-const createCar = async (req, res) => {
+// Create a new car listing
+const createCar = asyncHandler(async (req, res) => {
   try {
-    const { brand, model, year, price, type, mileage, images, description, seller } = req.body;
+    const { brand, model, year, price, type, mileage, images, description } = req.body;
+    
+    console.log('Received car data:', req.body); // Debug log
 
-    // ✅ Check for missing required fields
-    if (!brand || !model || !year || !price || !type || !seller) {
-      return res.status(400).json({ message: "Please provide all required fields: brand, model, year, price, type, and seller." });
+    // Validate required fields
+    if (!brand || !model || !year || !price || !type) {
+      res.status(400);
+      throw new Error('Please fill in all required fields');
     }
 
-    // ✅ Validate `type` (must be either "new" or "used")
-    if (!["new", "used"].includes(type.toLowerCase())) {
-      return res.status(400).json({ message: "Type must be either 'new' or 'used'." });
-    }
-
-    // ✅ Ensure seller ID is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(seller)) {
-      return res.status(400).json({ message: "Invalid seller ID format" });
-    }
-
-    // ✅ Create a new car
+    // Create car object
     const car = new Car({
       brand,
       model,
-      year,
-      price,
+      year: Number(year),
+      price: Number(price),
       type,
-      mileage: mileage || 0, // Default to 0 if not provided
-      images: images || [], // Default to empty array if not provided
+      mileage: mileage ? Number(mileage) : 0,
+      images: images || [],
       description: description || "No description available",
-      seller, // Must be a valid ObjectId
     });
 
-    await car.save();
-    res.status(201).json({ message: "Car added successfully", car });
-
+    const savedCar = await car.save();
+    res.status(201).json(savedCar);
   } catch (error) {
-    console.error("Error creating car:", error);
-
-    // ✅ Handle validation errors specifically
-    if (error.name === "ValidationError") {
-      return res.status(400).json({ message: "Validation Error", errors: error.errors });
-    }
-
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error('Error creating car:', error);
+    res.status(500).json({ 
+      message: 'Error creating car listing',
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
-};
-
+});
 
 // Update a car listing
 const updateCar = asyncHandler(async (req, res) => {

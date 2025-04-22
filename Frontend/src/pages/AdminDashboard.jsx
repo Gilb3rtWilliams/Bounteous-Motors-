@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/AdminDashboard.css';
 import AdminSlideshow from '../components/AdminSlideshow';
 import AuthContext from '../context/AuthContext';
 
-
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [stats] = useState({
     totalUsers: 150,
     activeListings: 45,
@@ -21,6 +22,12 @@ const AdminDashboard = () => {
 
   const adminActions = [
     {
+      title: 'Add Car Listing',
+      description: 'Add a new car to the listings',
+      icon: '🚘',
+      action: () => navigate('/admin/add-car')
+    },
+    {
       title: 'Manage Users',
       description: 'View and manage user accounts',
       icon: '👥',
@@ -31,6 +38,12 @@ const AdminDashboard = () => {
       description: 'Review and approve car listings',
       icon: '🚗',
       action: () => console.log('Navigate to listings review')
+    },
+    {
+      title: 'Manage Car Deliveries',
+      description: 'View and manage car deliveries',
+      icon: '🚚',
+      action: () => console.log('Navigate to car deliveries')
     },
     {
       title: 'Transaction History',
@@ -77,7 +90,7 @@ const AdminDashboard = () => {
       </section>
 
       <section className="admin-actions">
-        <h2>Quick Actions</h2>
+        <h2>Admin Actions</h2>
         <div className="actions-grid">
           {adminActions.map((action, index) => (
             <div key={index} className="action-card" onClick={action.action}>

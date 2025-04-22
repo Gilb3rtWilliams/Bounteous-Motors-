@@ -18,6 +18,8 @@ import Navbar from "./components/Navbar";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRegister from "./pages/AdminRegister";
 import AdminProfile from "./pages/AdminProfile";
+import OrderCar from "./pages/OrderCar";
+import AddCarListing from "./pages/AddCarListing";
 
 const App = () => {
   return (
@@ -38,14 +40,24 @@ const App = () => {
               <Route path="/terms" element={<Terms />} />
               <Route path="/sitemap" element={<Sitemap />} />
               <Route path="/sell" element={<SellCar />} />
+              <Route path="/order" element={<OrderCar />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               <Route 
+                path="/admin/add-car" 
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AddCarListing />
+                  </ProtectedRoute>
+                }
+                />
+              <Route
                 path="/dashboard" 
                 element={
                   <ProtectedRoute requiredRole="customer">
                     <Dashboard />
                   </ProtectedRoute>
                 } 
-              />
+              />  
               <Route 
                 path="/admin-dashboard" 
                 element={

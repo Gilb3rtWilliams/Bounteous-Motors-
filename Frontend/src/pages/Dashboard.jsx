@@ -7,7 +7,7 @@ import Watchlist from '../components/Watchlist';
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  const [userStats] = useState({
+  const [userStats, setUserStats] = useState({
     buyingStats: {
       totalPurchases: 0,
       pendingPurchases: 0,
@@ -23,36 +23,75 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // TODO: Fetch user profile and stats from backend
-    // This will be implemented once the backend endpoints are updated
-  }, []);
+    const fetchUserProfile = async () => {
+      const response = await fetch(`/api/users/${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch user profile');
+      }
+
+      const data = await response.json();
+      setUserStats(data.stats);
+    };
+
+    fetchUserProfile();
+  }, [user.id, user.token]);
 
   const navigationCards = [
     {
-      title: 'Buy Cars',
-      description: 'Browse available cars and make purchases',
-      link: 'cars',
+      title: 'Order a Car',
+      description: 'Order a car and schedule test drives',
+      link: 'order-car',
       icon: '🚗'
     },
     {
-      title: 'Sell Cars',
-      description: 'List your cars for sale',
-      link: 'services',
-      icon: '💰'
+      title: 'Schedule Test Drive',
+      description: 'Schedule a test drive with a car seller',
+      link: 'schedule-test-drive',
+      icon: '🕰️'
     },
     {
-      title: 'My Listings',
-      description: 'Manage your car listings',
-      link: 'my-listings',
-      icon: '📋'
+      title: 'Trade in a Car',
+      description: 'Trade in your car for a new one',
+      link: 'trade-in',
+      icon: '🚚'
     },
     {
-      title: 'Purchase History',
-      description: 'View your purchase history',
-      link: 'purchase-history',
-      icon: '📜'
+      title: 'View Negotiations',
+      description: 'View and manage negotiations for your posted cars',
+      link: 'negotiations',
+      icon: '💭'
+    },
+    {
+      title: 'View Notifications',
+      description: 'View notifications from car sellers',
+      link: 'notifications',
+      icon: '📣'
+    },
+    {
+      title: 'Post a Car for Sale',
+      description: 'Post a new car for sale',
+      link: 'add-listing',
+      icon: '📝'
+    },
+    {
+      title: 'Manage Orders',
+      description: 'Manage orders for cars you posted',
+      link: 'manage-orders',
+      icon: '📦'
+    },
+    {
+      title: 'Manage Negotiations',
+      description: 'Manage negotiations for cars you posted',
+      link: 'manage-negotiations',
+      icon: '💬'
     }
   ];
+  
 
   return (
     <div className="dashboard-container">

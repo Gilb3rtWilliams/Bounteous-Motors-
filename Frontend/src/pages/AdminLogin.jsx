@@ -49,6 +49,7 @@ const AdminLogin = () => {
       <div className="auth-container">
         <div className="auth-form-container login">
           <h2>Admin Login</h2>
+          <h4>⚠ Restricted access: Admins only!</h4>
           {error && <p className="error-message">{error}</p>}
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">

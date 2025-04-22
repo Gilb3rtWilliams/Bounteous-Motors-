@@ -9,10 +9,11 @@ const api = axios.create({
   },
 });
 
-// Add a request interceptor to include the auth token
+// Use correct token reference from localStorage
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const token = storedUser?.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -27,8 +28,16 @@ api.interceptors.request.use(
 export const carAPI = {
   // Get all cars
   getAllCars: async () => {
-    const response = await api.get('/cars');
-    return response.data;
+    try {
+      const response = await api.get('/cars');
+      if (!response.data) {
+        throw new Error('No data received from server');
+      }
+      return response.data;
+    } catch (error) {
+      console.error('API Error:', error);
+      throw error;
+    }
   },
 
   // Get car by ID
@@ -55,5 +64,39 @@ export const carAPI = {
     return response.data;
   }
 };
+// Add this new section to your api.js file, alongside the carAPI object
+
+export const orderAPI = {
+  // Create a new order
+  createOrder: async (orderData) => {
+    const response = await api.post('/orders', orderData);
+    return response.data;
+  },
+
+  // Get all orders for a user
+  getUserOrders: async () => {
+    const response = await api.get('/orders');
+    return response.data;
+  },
+
+  // Get specific order by ID
+  getOrderById: async (orderId) => {
+    const response = await api.get(`/orders/${orderId}`);
+    return response.data;
+  },
+
+  // Update order status
+  updateOrderStatus: async (orderId, status) => {
+    const response = await api.put(`/orders/${orderId}/status`, { status });
+    return response.data;
+  },
+
+  // Cancel order
+  cancelOrder: async (orderId) => {
+    const response = await api.delete(`/orders/${orderId}`);
+    return response.data;
+  }
+};
+
 
 export default api;

@@ -9,7 +9,6 @@ const carSchema = new mongoose.Schema({
   mileage: { type: Number, default: 0 },
   images: [{ type: String }],
   description: { type: String },
-  seller: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: { type: Date, default: Date.now },
   
   // Additional fields for detailed information
