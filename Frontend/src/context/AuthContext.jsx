@@ -1,27 +1,11 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 
 const API_URL = 'http://localhost:5000/api';
 const AuthContext = createContext(null);
 
-const isTokenExpired = (token) => {
-  try {
-    const decoded = jwtDecode(token);
-    return decoded.exp * 1000 < Date.now();
-  } catch (e) {
-    return true; // invalid token format
-  }
-};
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -29,14 +13,12 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Configure axios to always send the token if it exists
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
-        // Set the default authorization header
         axios.defaults.headers.common['Authorization'] = `Bearer ${parsedUser.token}`;
       } catch (error) {
         console.error("Error parsing stored user:", error);
@@ -51,8 +33,6 @@ export const AuthProvider = ({ children }) => {
       const { data } = await axios.post(`${API_URL}/users/login`, {
         email,
         password
-      }, {
-        timeout: 5000 // 5 second timeout
       });
 
       if (!data.success) {
@@ -70,16 +50,13 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(userData));
       setUser(userData);
       axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
-      
-      // Use the server-provided redirect path or fallback based on role
+
       const redirectPath = data.redirectTo || (userData.role === 'admin' ? '/admin-dashboard' : '/customer/dashboard');
       navigate(redirectPath);
       return true;
     } catch (error) {
       console.error('Login error:', error);
-      const errorMsg = error.response?.data?.message || 
-                      error.message || 
-                      "Login failed";
+      const errorMsg = error.response?.data?.message || error.message || "Login failed";
       setError(errorMsg);
       throw new Error(errorMsg);
     }
@@ -91,7 +68,7 @@ export const AuthProvider = ({ children }) => {
         name: userData.name,
         email: userData.email,
         password: userData.password,
-        role: "customer" // Regular users are always customers
+        role: "customer"
       });
 
       if (!data.success) {

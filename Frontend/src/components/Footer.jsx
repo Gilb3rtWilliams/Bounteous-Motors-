@@ -23,7 +23,7 @@ const Footer = () => {
           <h3>Contact Info</h3>
           <ul>
             <li>📍 Roaster, Thika Rd Nairobi, Kenya</li>
-            <li>📞 +254 722 123456</li>
+            <li>📞 +254 702 974693/ +254 700 065150</li>
             <li>✉️ info@bounteousmotors.com</li>
           </ul>
         </div>

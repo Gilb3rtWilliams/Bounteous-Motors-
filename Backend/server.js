@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const cookieParser = require('cookie-parser');
 
 require("dotenv").config();
 
@@ -35,6 +36,9 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
+app.use('/uploads', express.static('uploads'));
+
 
 // ✅ Updated CORS configuration to allow frontend on port 5173 (Vite)
 app.use(cors({

@@ -62,7 +62,8 @@ const Contact = () => {
 
             <div className="info-card">
               <h3>Contact Info</h3>
-              <p>📞 +254 722 123456</p>
+              <p>📞 +254 702 974693/
+                <br/>    +254 700 065150</p>
               <p>✉️ info@bunteousmotors.com</p>
               <p>⏰ Mon-Fri: 9:00 AM - 6:00 PM</p>
             </div>

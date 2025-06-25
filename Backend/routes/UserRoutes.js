@@ -10,6 +10,7 @@ const {
   getUserById,
   deleteUser,
   updateUserRole,
+  refreshToken
 } = require("../controllers/userController");
 
 console.log("🔹 Loaded User Routes:", {
@@ -22,6 +23,7 @@ console.log("🔹 Loaded User Routes:", {
   getUserById,
   deleteUser,
   updateUserRole,
+  refreshToken
 }); // ✅ Debugging log to confirm controllers are imported
 
 const router = express.Router();
@@ -38,6 +40,7 @@ router.post("/login", loginUser);
  */
 router.get("/profile", protect, getUserProfile);
 router.put("/profile", protect, updateUserProfile);
+router.post('/refresh-token', refreshToken);
 
 /**  
  * ✅ Admin-Only Routes  

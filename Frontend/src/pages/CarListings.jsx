@@ -4,7 +4,7 @@ import { FaSearch, FaFilter, FaSortAmountDown, FaCar, FaTachometerAlt, FaCalenda
 import { BiGasPump } from 'react-icons/bi';
 import { BsSpeedometer2 } from 'react-icons/bs';
 import { carAPI, orderAPI } from '../services/api'; // Fixed: Combined imports
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import "../css/CarListings.css";
 import Slideshow from '../components/Slideshow';
 import Navbar from '../components/Navbar';

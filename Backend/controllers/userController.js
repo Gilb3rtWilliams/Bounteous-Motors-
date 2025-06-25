@@ -8,6 +8,30 @@ const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
+// Refresh JWT Token
+const refreshToken = (req, res) => {
+  const token = req.cookies?.refreshToken;
+
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'No refresh token provided' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+
+    const newAccessToken = jwt.sign({
+      id: decoded.id,
+      name: decoded.name,
+      email: decoded.email,
+      role: decoded.role
+    }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+
+    return res.json({ success: true, token: newAccessToken });
+  } catch (err) {
+    return res.status(403).json({ success: false, message: 'Invalid or expired refresh token' });
+  }
+};
+
 // @desc Register new user
 // @route POST /api/users/register
 // @access Public
@@ -397,5 +421,6 @@ module.exports = {
     getUsers,
     getUserById,
     deleteUser,
-    updateUserRole
+    updateUserRole,
+    refreshToken
 };

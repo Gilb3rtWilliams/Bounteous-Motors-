@@ -37,12 +37,40 @@ const getCarById = asyncHandler(async (req, res) => {
 // Create a new car listing
 const createCar = asyncHandler(async (req, res) => {
   try {
-    const { brand, model, year, price, type, mileage, images, description } = req.body;
-    
-    console.log('Received car data:', req.body); // Debug log
+    console.log("🔁 Incoming car listing...");
+    const {
+      brand,
+      model,
+      year,
+      price,
+      type,
+      mileage,
+      condition,
+      fuelType,
+      transmission,
+      location,
+      description,
+      engine,
+      horsepower,
+      acceleration,
+      features,
+      exteriorColor,
+      interiorColor,
+      vin,
+      bodyStyle,
+      status
+    } = req.body;
+
+    // Handle image uploads
+    const imagePaths = req.files ? req.files.map(file => file.filename) : [];
+
+    // Convert features to array if passed as comma-separated string
+    const parsedFeatures = typeof features === 'string'
+      ? features.split(',').map(f => f.trim())
+      : Array.isArray(features) ? features : [];
 
     // Validate required fields
-    if (!brand || !model || !year || !price || !type) {
+    if (!brand || !model || !year || !price || !type || !condition) {
       res.status(400);
       throw new Error('Please fill in all required fields');
     }
@@ -55,21 +83,43 @@ const createCar = asyncHandler(async (req, res) => {
       price: Number(price),
       type,
       mileage: mileage ? Number(mileage) : 0,
-      images: images || [],
-      description: description || "No description available",
+      condition,
+      fuelType,
+      transmission,
+      location,
+      description: description || "No description provided",
+      engine,
+      horsepower,
+      acceleration,
+      features: parsedFeatures,
+      exteriorColor,
+      interiorColor,
+      vin,
+      bodyStyle,
+      status: status || 'Available',
+      images: imagePaths,
+      seller: req.user._id, // set by auth middleware
+      createdAt: new Date(),
+      lastModified: new Date()
     });
 
     const savedCar = await car.save();
-    res.status(201).json(savedCar);
+
+    res.status(201).json({
+      success: true,
+      message: 'Car listing created successfully',
+      car: savedCar
+    });
   } catch (error) {
-    console.error('Error creating car:', error);
-    res.status(500).json({ 
+    console.error('❌ Error creating car listing:', error.message);
+    res.status(500).json({
       message: 'Error creating car listing',
       error: error.message,
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 });
+
 
 // Update a car listing
 const updateCar = asyncHandler(async (req, res) => {

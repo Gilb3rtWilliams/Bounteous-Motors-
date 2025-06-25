@@ -9,6 +9,14 @@ const carSchema = new mongoose.Schema({
   mileage: { type: Number, default: 0 },
   images: [{ type: String }],
   description: { type: String },
+
+   // User who created the listing
+  seller: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: 'User',
+  required: true
+},
+
   createdAt: { type: Date, default: Date.now },
   
   // Additional fields for detailed information
@@ -33,6 +41,7 @@ const carSchema = new mongoose.Schema({
   
   // Status
   status: { type: String, enum: ["Available", "Sold", "Reserved"], default: "Available" },
+
   
   // Timestamps for various events
   lastModified: { type: Date, default: Date.now },

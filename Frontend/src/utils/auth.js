@@ -1,37 +1,39 @@
 export const getToken = () => {
-    return localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user?.token || null;
 };
 
 export const setToken = (token) => {
-    if (!token) return;
-    localStorage.setItem('token', token);
+  if (!token) return;
+  const user = JSON.parse(localStorage.getItem('user')) || {};
+  const updatedUser = { ...user, token };
+  localStorage.setItem('user', JSON.stringify(updatedUser));
 };
 
 export const removeToken = () => {
-    localStorage.removeItem('token');
+  localStorage.removeItem('user'); // removes the whole object
 };
 
 export const isAuthenticated = () => {
-    const token = getToken();
-    return !!token;
+  return !!getToken();
 };
 
 export const parseJwt = (token) => {
-    try {
-        return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-        console.error("Failed to parse JWT:", e);
-        return null;
-    }
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    console.error("Failed to parse JWT:", e);
+    return null;
+  }
 };
 
 export const isTokenValid = () => {
-    const token = getToken();
-    if (!token) return false;
-    
-    const decodedToken = parseJwt(token);
-    if (!decodedToken) return false;
-    
-    const currentTime = Date.now() / 1000;
-    return decodedToken.exp > currentTime;
+  const token = getToken();
+  if (!token) return false;
+
+  const decodedToken = parseJwt(token);
+  if (!decodedToken) return false;
+
+  const currentTime = Date.now() / 1000;
+  return decodedToken.exp > currentTime;
 };
