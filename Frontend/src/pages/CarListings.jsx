@@ -216,12 +216,9 @@ const CarListings = () => {
           );
         })}
       </div>
-      <div className="back-to-top">
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          Back to Top</button>
-      </div>
-      <Footer />
-
+      <br />
+      
+      
     </div>
   );
 };
