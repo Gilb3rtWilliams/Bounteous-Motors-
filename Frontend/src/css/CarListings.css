@@ -159,7 +159,9 @@
 
 
 .car-image {
-  height: 220px;
+  background-color: red;
+  width: 100%;
+  min-height: 300px; /* Adjust height as needed */
   overflow: hidden;
   position: relative;
 }
@@ -184,6 +186,53 @@
   height: 50%;
   background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
   pointer-events: none;
+}
+
+.carousel .slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px; /* this is the key */
+}
+
+
+.carousel .slide img {
+  height: 100%;            /* ✅ fill parent height */
+  width: 100%;             /* ✅ stretch fully */
+  object-fit: cover;       /* ✅ crop to fill */
+  border-radius: 8px;
+}
+.carousel .slide img:hover {
+  transform: scale(1.05);
+  transition: transform 0.5s ease;
+}
+.carousel .slide img:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+.carousel .slide img:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.5);
+}
+.carousel .slide img:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.5);
+}
+.carousel .slide img:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.5);
+}
+.carousel .slide img:focus-within:hover {
+  transform: scale(1.05); /* Optional: scale up on hover */
+  transition: transform 0.5s ease;
+}
+.carousel .slide img:focus-within:active {
+  transform: scale(0.95); /* Optional: scale down on click */
+  transition: transform 0.1s ease;
+}
+.carousel .slide img:focus-within:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.5); /* Custom focus outline */
 }
 
 .car-details {
@@ -316,4 +365,21 @@
   .cars-grid {
     grid-template-columns: 1fr;
   }
+}
+back-to-top {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }

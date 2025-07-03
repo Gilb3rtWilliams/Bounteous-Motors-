@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axios';
 import '../css/AddCarListing.css';
-import AdminSlideshow from '../components/AdminSlideshow';
 import { useAuth } from '../hooks/useAuth'; // adjust path if needed
+import AdminSlideshow from '../components/AdminSlideshow'; // adjust path if needed
 
 const AddCarListing = () => {
   const navigate = useNavigate();
@@ -52,10 +52,19 @@ const AddCarListing = () => {
   };
 
   const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+    const files = Array.from(e.target.files).filter(file =>
+      validTypes.includes(file.type)
+    );
+
+    if (files.length === 0) {
+      alert("Only JPEG, PNG, JPG, or WebP files are allowed.");
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
-      images: files
+      images: files // replace instead of appending
     }));
   };
 
@@ -104,13 +113,14 @@ const AddCarListing = () => {
 
       await axiosInstance.post('/cars', formDataToSend);
 
+
       await Swal.fire({
         icon: 'success',
         title: 'Car Added',
         text: 'Your listing has been posted successfully.'
       });
 
-      navigate('/admin/dashboard');
+      navigate('/car-listings');
     } catch (error) {
       const message = error.response?.data?.message || error.message;
 
@@ -132,7 +142,7 @@ const AddCarListing = () => {
     }
   };
 
-return (
+  return (
     <div className="add-car-listing">
       <AdminSlideshow />
       <h1>Add New Car Listing</h1>
@@ -273,11 +283,13 @@ return (
           <label>Images:</label>
           <input
             type="file"
+            name="images"
             multiple
             accept="image/*"
             onChange={handleImageUpload}
             required
           />
+
         </div>
 
         <button type="submit" disabled={loading}>

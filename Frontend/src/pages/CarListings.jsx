@@ -8,6 +8,8 @@ import { useAuth } from '../hooks/useAuth';
 import "../css/CarListings.css";
 import Slideshow from '../components/Slideshow';
 import Navbar from '../components/Navbar';
+import CarImageSlideshow from '../components/CarImageSlideshow';
+import Footer from '../components/Footer'; // Import Footer component
 
 const CarListings = () => {
   const navigate = useNavigate();
@@ -91,6 +93,9 @@ const CarListings = () => {
       </div>
     );
   }
+
+  console.log("All cars data:", cars);
+  console.log("Rendering images for:", cars._id, cars.images);
 
   return (
     <div className="car-listings-container">
@@ -182,30 +187,41 @@ const CarListings = () => {
       </div>
 
       <div className="cars-grid">
-        {cars.map(car => (
-          <div key={car._id} className="car-card">
-            <div className="car-image">
-              <img
-                src={car.image || '/images/no-image.png'}
-                alt={`${car.year} ${car.make} ${car.model}`}
-              />
-            </div>
-            <div className="car-details">
-              <h3>{`${car.year} ${car.brand} ${car.model}`}</h3>
-              <p className="car-price">${car.price.toLocaleString()}</p>
-              <div className="car-specs">
-                <span><FaCar />{car.type}</span>
-                <span><BsSpeedometer2 />{car.mileage || 0} miles</span>
-                <span><BiGasPump />{car.fuelType || 'N/A'}</span>
-                <span><FaMapMarkerAlt />{car.location || 'Nairobi'}</span>
+        {cars.map((car) => {
+          console.log("Rendering images for:", car._id, car.images);
+
+          return (
+            <div key={car._id} className="car-card">
+              <div className="car-image" style={{ height: "300px", overflow: "hidden" }}>
+                <CarImageSlideshow
+                  images={car.images}
+                  height="300px"
+                  altPrefix={`${car.year} ${car.brand} ${car.model}`}
+                />
               </div>
-              <p className="car-description">{car.description}</p>
-              <button className="view-details-btn" onClick={() => handleViewDetails(car._id)}>View Details</button>
-              <button className="order-btn" onClick={() => handleOrder(car._id)}>Order Now</button>
+              <div className="car-details">
+                <h3>{`${car.year} ${car.brand} ${car.model}`}</h3>
+                <p className="car-price">${car.price.toLocaleString()}</p>
+                <div className="car-specs">
+                  <span><FaCar />{car.type}</span>
+                  <span><BsSpeedometer2 />{car.mileage || 0} miles</span>
+                  <span><BiGasPump />{car.fuelType || 'N/A'}</span>
+                  <span><FaMapMarkerAlt />{car.location || 'Nairobi'}</span>
+                </div>
+                <p className="car-description">{car.description}</p>
+                <button className="view-details-btn" onClick={() => handleViewDetails(car._id)}>View Details</button>
+                <button className="order-btn" onClick={() => handleOrder(car._id)}>Order Now</button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+      <div className="back-to-top">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          Back to Top</button>
+      </div>
+      <Footer />
+
     </div>
   );
 };

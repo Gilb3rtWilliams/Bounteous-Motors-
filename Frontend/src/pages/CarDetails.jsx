@@ -4,13 +4,14 @@ import { FaCar, FaTachometerAlt, FaGasPump, FaMapMarkerAlt, FaCog, FaCalendarAlt
 import { BsSpeedometer2 } from 'react-icons/bs';
 import { carAPI } from '../services/api';
 import '../css/CarDetails.css';
+import CarImageSlideshow from '../components/CarImageSlideshow';
+import AdminSlideshow from '../components/AdminSlideshow';
 
 const CarDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     const fetchCarDetails = async () => {
@@ -52,36 +53,25 @@ const CarDetails = () => {
 
   return (
     <div className="car-details-container">
+      <AdminSlideshow />
       <button className="back-button" onClick={() => navigate(-1)}>
         <FaArrowLeft /> Back to Listings
       </button>
 
       <div className="car-details-grid">
         <div className="car-gallery">
-          <div className="main-image">
-            <img 
-              src={car.images && car.images.length > 0 ? car.images[activeImage] : 'https://via.placeholder.com/600x400?text=No+Image+Available'} 
-              alt={`${car.year} ${car.make} ${car.model}`} 
-            />
-          </div>
-          {car.images && car.images.length > 1 && (
-            <div className="thumbnail-grid">
-              {car.images.map((image, index) => (
-                <div
-                  key={index}
-                  className={`thumbnail ${activeImage === index ? 'active' : ''}`}
-                  onClick={() => setActiveImage(index)}
-                >
-                  <img src={image} alt={`${car.make} ${car.model} view ${index + 1}`} />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+  <CarImageSlideshow
+    images={car.images}
+    height="400px"
+    altPrefix={`${car.make} ${car.model}`}
+  />
+</div>
+
+
 
         <div className="car-info">
           <div className="car-header">
-            <h1>{`${car.year} ${car.make} ${car.model}`}</h1>
+            <h1>{`${car.year} ${car.brand} ${car.model}`}</h1>
             <div className="price-tag">${car.price.toLocaleString()}</div>
           </div>
 

@@ -38,6 +38,7 @@ const getCarById = asyncHandler(async (req, res) => {
 const createCar = asyncHandler(async (req, res) => {
   try {
     console.log("🔁 Incoming car listing...");
+
     const {
       brand,
       model,
@@ -61,22 +62,23 @@ const createCar = asyncHandler(async (req, res) => {
       status
     } = req.body;
 
-    // Handle image uploads
-    const imagePaths = req.files ? req.files.map(file => file.filename) : [];
+    // ✅ Fix: Safely parse features
+    let parsedFeatures = [];
+    if (typeof features === 'string') {
+      parsedFeatures = features.split(',').map(f => f.trim());
+    } else if (Array.isArray(features)) {
+      parsedFeatures = features.map(f => f.trim());
+    }
 
-    // Convert features to array if passed as comma-separated string
-    const parsedFeatures = typeof features === 'string'
-      ? features.split(',').map(f => f.trim())
-      : Array.isArray(features) ? features : [];
+    // ✅ Fix: Handle uploaded images safely
+    const imagePaths = req.files?.map(file => file.filename) || [];
 
-    // Validate required fields
     if (!brand || !model || !year || !price || !type || !condition) {
       res.status(400);
       throw new Error('Please fill in all required fields');
     }
 
-    // Create car object
-    const car = new Car({
+    const newCar = new Car({
       brand,
       model,
       year: Number(year),
@@ -98,17 +100,18 @@ const createCar = asyncHandler(async (req, res) => {
       bodyStyle,
       status: status || 'Available',
       images: imagePaths,
-      seller: req.user._id, // set by auth middleware
+      seller: req.user._id,
       createdAt: new Date(),
       lastModified: new Date()
     });
 
-    const savedCar = await car.save();
+    console.log("📸 Image files saved:", imagePaths);
 
+    const saved = await newCar.save();
     res.status(201).json({
       success: true,
       message: 'Car listing created successfully',
-      car: savedCar
+      car: saved
     });
   } catch (error) {
     console.error('❌ Error creating car listing:', error.message);
@@ -119,6 +122,7 @@ const createCar = asyncHandler(async (req, res) => {
     });
   }
 });
+
 
 
 // Update a car listing

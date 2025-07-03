@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const cookieParser = require('cookie-parser');
-
+const path = require('path');
 require("dotenv").config();
 
-// Models
+// 📦 Load Models
 require("./models/User");
 require("./models/Car");
 require("./models/Order");
@@ -17,7 +17,7 @@ require("./models/Negotiation");
 require("./models/Delivery");
 require("./models/Notification");
 
-// Route Imports
+// 🛣 Route Imports
 const adminRoutes = require("./routes/adminRoutes");
 const customerRoutes = require("./routes/customerRoutes");
 const userRoutes = require("./routes/UserRoutes");
@@ -31,32 +31,33 @@ const negotiationRoutes = require("./routes/negotiationRoutes");
 const deliveryRoutes = require("./routes/deliveryRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 
-// Initialize Express app
+// 🚀 Initialize Express app
 const app = express();
 
-// Middleware
+// 🔐 Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', express.static('uploads'));
 
+// 📂 Serve uploaded images statically from backend/uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// ✅ Updated CORS configuration to allow frontend on port 5173 (Vite)
+// 🌍 CORS: Allow frontend to communicate with backend
 app.use(cors({
-  origin: ['http://localhost:5173'], // <-- your frontend
+  origin: ['http://localhost:5173'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// ✅ Connect to MongoDB
+// 🔌 Connect to MongoDB
 connectDB();
 
-// Test Route
+// 🚦 API Health Check
 app.get("/", (req, res) => {
   res.send("🚗 Bounteous Motors API is running...");
 });
 
-// ✅ Routes
+// 📬 Route Mounts
 app.use("/api/users", userRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/orders", orderRoutes);
@@ -70,7 +71,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/customer", customerRoutes);
 
-// Global Error Handler
+// ❌ Global Error Handler
 app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err.stack || err);
   res.status(err.status || 500).json({
@@ -79,7 +80,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start Server
+// 🚀 Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}`);

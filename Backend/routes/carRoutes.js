@@ -10,16 +10,18 @@ const {
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
 // Multer setup for image uploads
-const multer = require('multer');
+const multer = require('multer'); 
 const path = require('path');
 
 // Storage configuration
 const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/'); // ensure this folder exists
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
   },
-  filename(req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
+  filename: (req, file, cb) => {
+    const sanitized = file.originalname.replace(/\s+/g, '-'); // Replace spaces with -
+    const uniqueSuffix = `${Date.now()}-${sanitized}`;
+    cb(null, uniqueSuffix);
   }
 });
 
