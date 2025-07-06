@@ -1,8 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-<<<<<<< HEAD
-=======
 import { ToastContainer } from 'react-toastify';
->>>>>>> master
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -12,10 +9,6 @@ import CarListings from "./pages/CarListings";
 import CarDetails from "./pages/CarDetails";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
-<<<<<<< HEAD
-import Sitemap from "./pages/Sitemap";
-=======
->>>>>>> master
 import SellCar from "./pages/SellCar";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -27,20 +20,14 @@ import AdminRegister from "./pages/AdminRegister";
 import AdminProfile from "./pages/AdminProfile";
 import OrderCar from "./pages/OrderCar";
 import AddCarListing from "./pages/AddCarListing";
-<<<<<<< HEAD
-=======
 import PostCar from "./pages/PostCar";
->>>>>>> master
 
 const App = () => {
   return (
     <div className="app">
           <Navbar />
           <main>
-<<<<<<< HEAD
-=======
             <ToastContainer position="top-right" autoClose={2500} hideProgressBar />
->>>>>>> master
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/login" element={<Login />} />
@@ -53,16 +40,10 @@ const App = () => {
               <Route path="/car/:id" element={<CarDetails />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
-<<<<<<< HEAD
-              <Route path="/sitemap" element={<Sitemap />} />
-=======
->>>>>>> master
               <Route path="/sell" element={<SellCar />} />
               <Route path="/order" element={<OrderCar />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route 
-<<<<<<< HEAD
-=======
                 path="/post-car" 
                 element={
                   <ProtectedRoute requiredRole="customer">
@@ -71,7 +52,6 @@ const App = () => {
                 }
               />
               <Route 
->>>>>>> master
                 path="/admin/add-car" 
                 element={
                   <ProtectedRoute requiredRole="admin">
