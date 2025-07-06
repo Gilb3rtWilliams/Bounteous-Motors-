@@ -9,7 +9,6 @@ import "../css/CarListings.css";
 import Slideshow from '../components/Slideshow';
 import Navbar from '../components/Navbar';
 import CarImageSlideshow from '../components/CarImageSlideshow';
-import Footer from '../components/Footer'; // Import Footer component
 
 const CarListings = () => {
   const navigate = useNavigate();
@@ -37,7 +36,7 @@ const CarListings = () => {
       };
       const response = await orderAPI.createOrder(orderData);
       if (response.success) {
-        navigate('/order-confirmation');
+        navigate('/order');
       }
     } catch (error) {
       console.error('Error creating order:', error);
@@ -68,6 +67,22 @@ const CarListings = () => {
     navigate(`/car/${carId}`);
   };
 
+  const handleAddToWatchlist = async (carId) => {
+  if (!user) {
+    navigate('/login');
+    return;
+  }
+
+  try {
+    await carAPI.addToWatchlist(user.id, carId);
+    alert('Car added to watchlist!');
+  } catch (error) {
+    console.error('Failed to add to watchlist:', error);
+    alert('Failed to add to watchlist. Please try again.');
+  }
+};
+
+
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters(prev => ({
@@ -96,6 +111,13 @@ const CarListings = () => {
 
   console.log("All cars data:", cars);
   console.log("Rendering images for:", cars._id, cars.images);
+
+  // Generate years from 1950 to current year
+  const currentYear = new Date().getFullYear();
+  const years = [];
+  for (let y = currentYear; y >= 1950; y--) {
+    years.push(y);
+  }
 
   return (
     <div className="car-listings-container">
@@ -157,9 +179,9 @@ const CarListings = () => {
             className="filter-select"
           >
             <option value="">All Years</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
+            {years.map((year) => (
+              <option key={year} value={year}>{year}</option>
+            ))}
           </select>
 
           <select
@@ -203,22 +225,26 @@ const CarListings = () => {
                 <h3>{`${car.year} ${car.brand} ${car.model}`}</h3>
                 <p className="car-price">${car.price.toLocaleString()}</p>
                 <div className="car-specs">
-                  <span><FaCar />{car.type}</span>
-                  <span><BsSpeedometer2 />{car.mileage || 0} miles</span>
-                  <span><BiGasPump />{car.fuelType || 'N/A'}</span>
-                  <span><FaMapMarkerAlt />{car.location || 'Nairobi'}</span>
+                  <span><FaCar /><strong>{car.type}</strong></span>
+                  <span><BsSpeedometer2 /><strong>{car.mileage || 0} miles</strong></span>
+                  <span><BiGasPump /><strong>{car.fuelType || 'N/A'}</strong></span>
+                  <span><FaMapMarkerAlt /><strong>{car.location || 'Nairobi'}</strong></span>
                 </div>
                 <p className="car-description">{car.description}</p>
                 <button className="view-details-btn" onClick={() => handleViewDetails(car._id)}>View Details</button>
                 <button className="order-btn" onClick={() => handleOrder(car._id)}>Order Now</button>
+                <button
+                  className="add-watchlist-btn"
+                  onClick={() => handleAddToWatchlist(car._id)}
+                >
+                  ❤️ Add to Watchlist
+                </button>
               </div>
             </div>
           );
         })}
       </div>
       <br />
-      
-      
     </div>
   );
 };

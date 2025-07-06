@@ -24,37 +24,37 @@ const AdminDashboard = () => {
     {
       title: 'Add Car Listing',
       description: 'Add a new car to the listings',
-      icon: '🚘',
+      icon: '/images/icons/add-car.png',
       action: () => navigate('/admin/add-car')
     },
     {
       title: 'Manage Users',
       description: 'View and manage user accounts',
-      icon: '👥',
+      icon: '/images/icons/users.png',
       action: () => console.log('Navigate to user management')
     },
     {
       title: 'Review Listings',
       description: 'Review and approve car listings',
-      icon: '🚗',
+      icon: '/images/icons/review.png',
       action: () => console.log('Navigate to listings review')
     },
     {
       title: 'Manage Car Deliveries',
       description: 'View and manage car deliveries',
-      icon: '🚚',
+      icon: '/images/icons/delivery.png',
       action: () => console.log('Navigate to car deliveries')
     },
     {
       title: 'Transaction History',
       description: 'View all transaction records',
-      icon: '💰',
+      icon: '/images/icons/transactions.png',
       action: () => console.log('Navigate to transactions')
     },
     {
       title: 'System Settings',
       description: 'Configure system parameters',
-      icon: '⚙️',
+      icon: '/images/icons/settings.png',
       action: () => console.log('Navigate to settings')
     }
   ];
@@ -90,11 +90,11 @@ const AdminDashboard = () => {
       </section>
 
       <section className="admin-actions">
-        <h2>Admin Actions</h2>
+        <h2>Quick Actions</h2>
         <div className="actions-grid">
           {adminActions.map((action, index) => (
             <div key={index} className="action-card" onClick={action.action}>
-              <span className="action-icon">{action.icon}</span>
+              <img src={action.icon} alt={action.title} className="action-icon-image" />
               <h3>{action.title}</h3>
               <p>{action.description}</p>
             </div>
@@ -116,7 +116,7 @@ const AdminDashboard = () => {
                 <p>By {activity.user}</p>
                 <span className="activity-time">{activity.time}</span>
               </div>
-              <div className={`activity-status ${activity.status.toLowerCase()}`}>
+              <div className={`activity-status status-${activity.status.toLowerCase()}`}>
                 {activity.status}
               </div>
             </div>

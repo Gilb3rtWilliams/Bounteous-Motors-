@@ -411,6 +411,52 @@ const getUserById = asyncHandler(async (req, res) => {
     res.json(user);
 });
 
+// @desc Add car to user's watchlist
+// @route POST /api/users/:userId/watchlist
+// @access Private
+const addToWatchlist = async (req, res) => {
+  const { userId } = req.params;
+  const { carId } = req.body;
+
+  const user = await User.findById(userId);
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  if (!user.watchlist.includes(carId)) {
+    user.watchlist.push(carId);
+    await user.save();
+  }
+
+  res.status(200).json({ message: 'Car added to watchlist' });
+};
+
+// @desc Get user's watchlist
+// @route GET /api/users/:userId/watchlist
+// @access Private
+const getWatchlist = async (req, res) => {
+  const { userId } = req.params;
+
+  const user = await User.findById(userId).populate('watchlist');
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  // ✅ Always return an array
+  return res.status(200).json(user.watchlist || []);
+};
+
+const removeFromWatchlist = async (req, res) => {
+  const { userId, carId } = req.params;
+
+  const user = await User.findById(userId);
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  user.watchlist = user.watchlist.filter(id => id.toString() !== carId);
+  await user.save();
+
+  res.status(200).json({ success: true, message: 'Removed from watchlist' });
+};
+
+
 // Export all controllers
 module.exports = {
     registerUser,
@@ -422,5 +468,8 @@ module.exports = {
     getUserById,
     deleteUser,
     updateUserRole,
-    refreshToken
+    refreshToken,
+    addToWatchlist,
+    getWatchlist,
+    removeFromWatchlist
 };

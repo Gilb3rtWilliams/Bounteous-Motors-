@@ -62,7 +62,7 @@ const CarDetails = () => {
         <div className="car-gallery">
   <CarImageSlideshow
     images={car.images}
-    height="400px"
+    height="700px"
     altPrefix={`${car.make} ${car.model}`}
   />
 </div>

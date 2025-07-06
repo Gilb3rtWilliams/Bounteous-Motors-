@@ -58,7 +58,11 @@ app.get("/", (req, res) => {
 });
 
 // 📬 Route Mounts
+<<<<<<< HEAD
 app.use("/api/users", userRoutes);
+=======
+app.use('/api/users', userRoutes);
+>>>>>>> master
 app.use("/api/cars", carRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payments", paymentRoutes);

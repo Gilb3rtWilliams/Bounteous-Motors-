@@ -40,6 +40,10 @@ export const carAPI = {
     }
   },
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
   // Get car by ID
   getCarById: async (id) => {
     const response = await api.get(`/cars/${id}`);
@@ -62,7 +66,29 @@ export const carAPI = {
   deleteCar: async (id) => {
     const response = await api.delete(`/cars/${id}`);
     return response.data;
+<<<<<<< HEAD
   }
+=======
+  },
+
+  // Add car to watchlist
+addToWatchlist: async (userId, carId) => {
+  const response = await api.post(`/users/${userId}/watchlist`, { carId });
+  return response.data;
+},
+
+getWatchlist: async (userId) => {
+  const response = await api.get(`/users/${userId}/watchlist`);
+  return response.data; // This should now always be { watchlist: [...] }
+},
+
+  // Remove car from watchlist
+  removeFromWatchlist: async (userId, carId) => {
+  const response = await api.delete(`/users/${userId}/watchlist/${carId}`);
+  return response.data;
+}
+
+>>>>>>> master
 };
 // Add this new section to your api.js file, alongside the carAPI object
 
@@ -95,7 +121,12 @@ export const orderAPI = {
   cancelOrder: async (orderId) => {
     const response = await api.delete(`/orders/${orderId}`);
     return response.data;
+<<<<<<< HEAD
   }
+=======
+  },
+
+>>>>>>> master
 };
 
 

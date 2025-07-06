@@ -45,53 +45,52 @@ const Dashboard = () => {
     {
       title: 'Order a Car',
       description: 'Order a car and schedule test drives',
-      link: 'order-car',
-      icon: '🚗'
+      icon: '/images/icons/order.png',
+      action : () => navigate('/order-car')
     },
     {
       title: 'Schedule Test Drive',
       description: 'Schedule a test drive with a car seller',
       link: 'schedule-test-drive',
-      icon: '🕰️'
+      icon: '/images/icons/test-drive.png'
     },
     {
       title: 'Trade in a Car',
       description: 'Trade in your car for a new one',
       link: 'trade-in',
-      icon: '🚚'
+      icon: '/images/icons/trade-in.png'
     },
     {
       title: 'View Negotiations',
       description: 'View and manage negotiations for your posted cars',
       link: 'negotiations',
-      icon: '💭'
+      icon: '/images/icons/negotiations.png'
     },
     {
       title: 'View Notifications',
       description: 'View notifications from car sellers',
       link: 'notifications',
-      icon: '📣'
+      icon: '/images/icons/notifications.png'
     },
     {
       title: 'Post a Car for Sale',
       description: 'Post a new car for sale',
-      link: 'add-listing',
-      icon: '📝'
+      icon: '/images/icons/add-car.png',
+      action: () => navigate('/post-car')
     },
     {
       title: 'Manage Orders',
       description: 'Manage orders for cars you posted',
       link: 'manage-orders',
-      icon: '📦'
+      icon: '/images/icons/orders.png'
     },
     {
       title: 'Manage Negotiations',
       description: 'Manage negotiations for cars you posted',
       link: 'manage-negotiations',
-      icon: '💬'
+      icon: '/images/icons/manage-negotiations.png'
     }
   ];
-  
 
   return (
     <div className="dashboard-container">
@@ -135,7 +134,7 @@ const Dashboard = () => {
               className="action-card"
               onClick={() => navigate(card.link)}
             >
-              <span className="action-icon">{card.icon}</span>
+              <img src={card.icon} alt={card.title} className="action-icon-image" />
               <h3>{card.title}</h3>
               <p>{card.description}</p>
             </div>

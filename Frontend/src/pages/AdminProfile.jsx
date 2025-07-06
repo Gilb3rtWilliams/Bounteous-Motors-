@@ -1,12 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaUserShield, FaEnvelope, FaKey, FaCheck } from 'react-icons/fa';
 import AuthContext from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import avatarPlaceholder from '../assets/avatar-placeholder.png';
 import '../css/Profile.css';
 
 const AdminProfile = () => {
   const { user, updateProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,19 +18,15 @@ const AdminProfile = () => {
     newPassword: '',
     confirmNewPassword: ''
   });
+
   const [message, setMessage] = useState({ text: '', type: '' });
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) {
-      navigate('/admin/login');
+    if (!user || user.role !== 'admin') {
+      navigate(user ? '/' : '/admin/login');
       return;
     }
-    if (user.role !== 'admin') {
-      navigate('/');
-      return;
-    }
-    // Load user data
+
     setFormData(prev => ({
       ...prev,
       name: user.name || '',
@@ -36,25 +36,19 @@ const AdminProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage({ text: '', type: '' });
 
-    // Validate passwords if attempting to change
     if (formData.newPassword || formData.confirmNewPassword) {
       if (formData.newPassword !== formData.confirmNewPassword) {
-        setMessage({ text: 'New passwords do not match', type: 'error' });
-        return;
+        return setMessage({ text: 'Passwords do not match.', type: 'error' });
       }
       if (!formData.currentPassword) {
-        setMessage({ text: 'Current password is required to change password', type: 'error' });
-        return;
+        return setMessage({ text: 'Current password required.', type: 'error' });
       }
     }
 
@@ -67,8 +61,7 @@ const AdminProfile = () => {
       });
 
       if (result.success) {
-        setMessage({ text: 'Profile updated successfully', type: 'success' });
-        // Clear password fields
+        setMessage({ text: 'Profile updated successfully ✔️', type: 'success' });
         setFormData(prev => ({
           ...prev,
           currentPassword: '',
@@ -76,11 +69,11 @@ const AdminProfile = () => {
           confirmNewPassword: ''
         }));
       } else {
-        setMessage({ text: result.message || 'Update failed', type: 'error' });
+        setMessage({ text: result.message || 'Update failed ❌', type: 'error' });
       }
     } catch (err) {
-      setMessage({ 
-        text: err.response?.data?.message || err.message || 'Failed to update profile',
+      setMessage({
+        text: err.response?.data?.message || err.message || 'Update error',
         type: 'error'
       });
     }
@@ -89,71 +82,56 @@ const AdminProfile = () => {
   return (
     <div className="profile-page">
       <Navbar />
-      <div className="profile-container">
-        <div className="profile-content">
-          <h2>Admin Profile</h2>
+      <div className="dashboard-container animate-fade-in">
+        {/* Admin Header */}
+        <div className="dashboard-header profile-summary">
+          <img src={avatarPlaceholder} alt="Admin Avatar" className="profile-avatar" />
+          <div>
+            <h1 className="gradient-text">{user?.name}</h1>
+            <p className="welcome-subtitle">{user?.email}</p>
+            <span className="user-role-badge">Admin</span>
+          </div>
+        </div>
+
+        <div className="glass-card form-card">
+          <h2><FaUserShield /> Admin Settings</h2>
+
           {message.text && (
             <div className={`message ${message.type}`}>
               {message.text}
             </div>
           )}
-          <form onSubmit={handleSubmit} className="profile-form">
+
+          <form className="profile-form" onSubmit={handleSubmit}>
+            {/* Personal Info */}
             <div className="form-group">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
+              <label><FaUserShield /> Full Name</label>
+              <input name="name" value={formData.name} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              <label><FaEnvelope /> Email</label>
+              <input type="email" name="email" value={formData.email} onChange={handleChange} required />
             </div>
-            <div className="password-section">
-              <h3>Change Password</h3>
-              <div className="form-group">
-                <label htmlFor="currentPassword">Current Password</label>
-                <input
-                  type="password"
-                  id="currentPassword"
-                  name="currentPassword"
-                  value={formData.currentPassword}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="newPassword">New Password</label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  name="newPassword"
-                  value={formData.newPassword}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="confirmNewPassword">Confirm New Password</label>
-                <input
-                  type="password"
-                  id="confirmNewPassword"
-                  name="confirmNewPassword"
-                  value={formData.confirmNewPassword}
-                  onChange={handleChange}
-                />
-              </div>
+
+            <hr className="divider" />
+            <h3><FaKey /> Change Password</h3>
+
+            <div className="form-group">
+              <label>Current Password</label>
+              <input type="password" name="currentPassword" value={formData.currentPassword} onChange={handleChange} />
             </div>
-            <button type="submit" className="update-button">Update Profile</button>
+            <div className="form-group">
+              <label>New Password</label>
+              <input type="password" name="newPassword" value={formData.newPassword} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" name="confirmNewPassword" value={formData.confirmNewPassword} onChange={handleChange} />
+            </div>
+
+            <button type="submit" className="save-button">
+              <FaCheck /> Update Profile
+            </button>
           </form>
         </div>
       </div>

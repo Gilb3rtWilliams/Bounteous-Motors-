@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+<<<<<<< HEAD
 import Sidebar from '../components/Sidebar';
+=======
+>>>>>>> master
 import Footer from '../components/Footer';
 import '../css/PostCar.css';
 import { 

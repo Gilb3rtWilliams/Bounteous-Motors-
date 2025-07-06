@@ -5,7 +5,7 @@
   background: #0a0a0a;
   min-height: 100vh;
   color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .listings-header {
@@ -106,7 +106,7 @@
 }
 
 .car-card {
-  background: #111;
+  background: black;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #222;
@@ -133,6 +133,10 @@
   font-size: 1.4rem;
   color: #ff3333;
   margin-bottom: 0.5rem;
+}
+.car-details p {
+  margin: 0.5rem 0;
+  color: #aaa;
 }
 
 .car-price {
@@ -214,4 +218,22 @@
     grid-template-columns: 1fr;
   }
 }
+.add-watchlist-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #333, #111);
+  color: red;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  margin-top: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
+.add-watchlist-btn:hover {
+  background: linear-gradient(135deg, #550000, #220000);
+  color: white;
+  transform: translateY(-2px);
+}
