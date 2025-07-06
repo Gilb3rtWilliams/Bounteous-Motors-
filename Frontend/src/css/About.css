@@ -1,0 +1,439 @@
+.about-page {
+  background: transparent;
+  color: white;
+  min-height: 100vh;
+  padding: 2rem;
+  min-height: calc(100vh - 80px);
+  margin-top: 20px;
+}
+
+.about-content {
+  padding-top: 60px;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+              url('/images/about-hero.jpg') center/cover;
+  margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: red;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: white;
+}
+
+/* Company Overview */
+.company-overview {
+  padding: 4rem 2rem;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.overview-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.overview-text p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.overview-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.stat {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(230, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-5px);
+}
+
+.stat h3 {
+  font-size: 2.5rem;
+  color: #e60000;
+  margin-bottom: 0.5rem;
+}
+
+/* Mission & Vision */
+.mission-vision {
+  padding: 4rem 2rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+              url('/images/mission-bg.jpg') center/cover fixed;
+}
+
+.mission-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+
+.mission-box, .vision-box {
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 1px solid rgba(230, 0, 0, 0.3);
+}
+
+/* Timeline */
+.milestones-section {
+  padding: 4rem 2rem;
+  background: black;
+}
+
+.timeline {
+  max-width: 1000px;
+  margin: 3rem auto;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: #e60000;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  margin: 2rem 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeline-year {
+  background: #e60000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-content {
+  width: 45%;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-left: 55%;
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+  margin-left: 0;
+  margin-right: 55%;
+}
+
+/* Leadership Team */
+.leadership-section {
+  padding: 4rem 2rem;
+  background: black;
+}
+
+.team-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.team-member {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+}
+
+.member-photo {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #e60000;
+}
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-member h3 {
+  color: #e60000;
+  margin-bottom: 0.5rem;
+}
+
+.team-member h4 {
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+/* Quality Assurance */
+.quality-assurance {
+  padding: 4rem 2rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+              url('/images/quality-bg.jpg') center/cover fixed;
+}
+
+.quality-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+
+.inspection-process, .certifications {
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
+
+.inspection-process ul, .certifications ul {
+  list-style: none;
+  padding: 0;
+}
+
+.inspection-process li, .certifications li {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.inspection-process li::before, .certifications li::before {
+  content: '✓';
+  color: #e60000;
+  position: absolute;
+  left: 0;
+}
+
+/* Technology & Innovation */
+.technology-innovation {
+  padding: 4rem 2rem;
+  background: black;
+}
+
+.tech-features {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.tech-item {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.tech-item:hover {
+  transform: translateY(-5px);
+}
+
+.tech-item h3 {
+  color: #e60000;
+  margin-bottom: 1rem;
+}
+
+/* Community Impact */
+.community-impact {
+  padding: 4rem 2rem;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+              url('/images/community-bg.jpg') center/cover fixed;
+}
+
+.impact-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+}
+
+.impact-initiatives {
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+}
+
+.impact-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.impact-stat {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(230, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.impact-stat h3 {
+  font-size: 2rem;
+  color: #e60000;
+  margin-bottom: 0.5rem;
+}
+
+/* Future Vision */
+.future-vision {
+  padding: 4rem 2rem;
+  background: black;
+}
+
+.vision-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.vision-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+}
+
+.vision-content li {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.vision-content li::before {
+  content: '→';
+  color: #e60000;
+  position: absolute;
+  left: 0;
+}
+
+/* Contact CTA */
+.contact-cta {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+              url('/images/contact-bg.jpg') center/cover;
+}
+
+.cta-buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.primary-btn, .secondary-btn {
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background: #e60000;
+  color: white;
+  border: none;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: white;
+  border: 2px solid #e60000;
+}
+
+.primary-btn:hover {
+  background: #ff0000;
+}
+
+.secondary-btn:hover {
+  background: rgba(230, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .overview-content,
+  .mission-content,
+  .quality-content,
+  .impact-content {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline::before {
+    left: 0;
+  }
+
+  .timeline-year {
+    left: 0;
+    transform: none;
+  }
+
+  .timeline-content {
+    width: 85%;
+    margin-left: 15%;
+  }
+
+  .timeline-item:nth-child(even) .timeline-content {
+    margin-left: 15%;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .stat h3 {
+    font-size: 2rem;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section Headers */
+section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: white;
+}
