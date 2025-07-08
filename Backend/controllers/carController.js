@@ -1,157 +1,213 @@
-const mongoose = require("mongoose");
+
 const asyncHandler = require("express-async-handler");
 const Car = require("../models/Car");
+const Notification = require("../models/Notification");
 
-// Fetch all cars
+// GET /api/cars - Fetch all cars
 const getCars = asyncHandler(async (req, res) => {
   const cars = await Car.find({});
   res.json(cars);
 });
 
-// Fetch a single car by ID with full details
+// GET /api/cars/:id - Fetch single car by ID
 const getCarById = asyncHandler(async (req, res) => {
   const car = await Car.findById(req.params.id)
-    .populate('seller', 'name email') // Populate seller details
-    .select('-__v'); // Exclude version key
+    .populate('seller', 'name email')
+    .select('-__v');
 
-  if (car) {
-    // Enhance the car object with additional details
-    const enhancedCar = {
-      ...car.toObject(),
-      features: car.features || [],
-      performance: {
-        engine: car.engine || 'Not specified',
-        horsepower: car.horsepower || 'Not specified',
-        acceleration: car.acceleration || 'Not specified',
-        transmission: car.transmission || 'Not specified'
-      },
-      location: car.location || 'Not specified',
-      fuelType: car.fuelType || 'Not specified'
-    };
-    res.json(enhancedCar);
-  } else {
-    res.status(404).json({ message: "Car not found" });
+  if (!car) {
+    return res.status(404).json({ message: "Car not found" });
   }
+
+  res.json(car);
 });
 
-// Create a new car listing
+// POST /api/cars - Admin creates a car listing
 const createCar = asyncHandler(async (req, res) => {
-  try {
-    console.log("🔁 Incoming car listing...");
+  const {
+    brand, model, year, price, type, mileage,
+    condition, fuelType, transmission, location,
+    description, engine, horsepower, acceleration,
+    exteriorColor, interiorColor, vin, bodyStyle,
+    features, status
+  } = req.body;
 
-    const {
-      brand,
-      model,
-      year,
-      price,
-      type,
-      mileage,
-      condition,
-      fuelType,
-      transmission,
-      location,
-      description,
-      engine,
-      horsepower,
-      acceleration,
-      features,
-      exteriorColor,
-      interiorColor,
-      vin,
-      bodyStyle,
-      status
-    } = req.body;
-
-    // ✅ Fix: Safely parse features
-    let parsedFeatures = [];
-    if (typeof features === 'string') {
-      parsedFeatures = features.split(',').map(f => f.trim());
-    } else if (Array.isArray(features)) {
-      parsedFeatures = features.map(f => f.trim());
-    }
-
-    // ✅ Fix: Handle uploaded images safely
-    const imagePaths = req.files?.map(file => file.filename) || [];
-
-    if (!brand || !model || !year || !price || !type || !condition) {
-      res.status(400);
-      throw new Error('Please fill in all required fields');
-    }
-
-    const newCar = new Car({
-      brand,
-      model,
-      year: Number(year),
-      price: Number(price),
-      type,
-      mileage: mileage ? Number(mileage) : 0,
-      condition,
-      fuelType,
-      transmission,
-      location,
-      description: description || "No description provided",
-      engine,
-      horsepower,
-      acceleration,
-      features: parsedFeatures,
-      exteriorColor,
-      interiorColor,
-      vin,
-      bodyStyle,
-      status: status || 'Available',
-      images: imagePaths,
-      seller: req.user._id,
-      createdAt: new Date(),
-      lastModified: new Date()
-    });
-
-    console.log("📸 Image files saved:", imagePaths);
-
-    const saved = await newCar.save();
-    res.status(201).json({
-      success: true,
-      message: 'Car listing created successfully',
-      car: saved
-    });
-  } catch (error) {
-    console.error('❌ Error creating car listing:', error.message);
-    res.status(500).json({
-      message: 'Error creating car listing',
-      error: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    });
+  // Parse features
+  let parsedFeatures = [];
+  if (typeof features === 'string') {
+    parsedFeatures = features.split(',').map(f => f.trim());
+  } else if (Array.isArray(features)) {
+    parsedFeatures = features.map(f => f.trim());
   }
+
+  // Uploaded image filenames
+  const imagePaths = req.files?.map(file => `/uploads/${file.filename}`) || [];
+
+  const newCar = new Car({
+    brand,
+    model,
+    year: Number(year),
+    price: Number(price),
+    type: type ? type.toLowerCase() : 'used', // Default to 'used' if not provided
+    mileage: mileage ? Number(mileage) : 0,
+    condition: condition ? condition.toLowerCase() : 'used', // Default to 'used' if not provided
+    fuelType,
+    transmission,
+    location,
+    description,
+    engine,
+    horsepower: horsepower ? Number(horsepower) : undefined,
+    acceleration,
+    features: parsedFeatures,
+    exteriorColor,
+    interiorColor,
+    vin,
+    bodyStyle,
+    status: status || 'Available',
+    images: imagePaths,
+    seller: req.user._id,
+    listedByAdmin: true
+  });
+
+  const savedCar = await newCar.save();
+  res.status(201).json({
+    success: true,
+    message: 'Car listing created successfully',
+    car: savedCar
+  });
 });
 
+// POST /api/cars/customer - Customer submits a car for review
+const postCustomerCar = asyncHandler(async (req, res) => {
+  const {
+    brand, model, year, price, type, mileage,
+    condition, fuelType, transmission, location,
+    description, engine, horsepower, acceleration,
+    exteriorColor, interiorColor, vin, bodyStyle,
+    features
+  } = req.body;
 
+  // Parse features
+  let parsedFeatures = [];
+  if (typeof features === 'string') {
+    parsedFeatures = features.split(',').map(f => f.trim());
+  } else if (Array.isArray(features)) {
+    parsedFeatures = features.map(f => f.trim());
+  }
 
-// Update a car listing
+  const imagePaths = req.files?.map(file => `/uploads/${file.filename}`) || [];
+
+  const newCar = new Car({
+    brand,
+    model,
+    year: Number(year),
+    price: Number(price),
+    type: type? type.toLowerCase() : 'used', // Default to 'used' if not provided
+    mileage: mileage ? Number(mileage) : 0,
+    condition: condition? condition.toLowerCase() : 'used', // Default to 'used' if not provided
+    fuelType,
+    transmission,
+    location,
+    description,
+    engine,
+    horsepower: horsepower ? Number(horsepower) : undefined,
+    acceleration,
+    features: parsedFeatures,
+    exteriorColor,
+    interiorColor,
+    vin,
+    bodyStyle,
+    status: 'Pending',
+    listedByAdmin: false,
+    images: imagePaths,
+    seller: req.user._id
+  });
+
+  const savedCar = await newCar.save();
+
+  await Notification.create({
+    message: `New car listing submitted by ${req.user.name}`,
+    recipientRole: 'admin',
+    user: req.user._id,
+    car: savedCar._id
+  });
+
+  res.status(201).json({ success: true, car: savedCar });
+});
+
+// PUT /api/cars/:id/approve - Admin approves a listing
+const approveCarListing = asyncHandler(async (req, res) => {
+  const car = await Car.findById(req.params.id);
+  if (!car) return res.status(404).json({ message: 'Car not found' });
+
+  car.status = 'Approved';
+  car.rejectionReason = '';
+  await car.save();
+
+  await Notification.create({
+    message: `Your car listing (${car.brand} ${car.model}) has been approved.`,
+    recipientRole: 'customer',
+    user: car.seller,
+    car: car._id
+  });
+
+  res.status(200).json({ success: true, message: 'Car approved' });
+});
+
+// PUT /api/cars/:id/reject - Admin rejects a listing
+const rejectCarListing = asyncHandler(async (req, res) => {
+  const { reason } = req.body;
+
+  const car = await Car.findById(req.params.id);
+  if (!car) return res.status(404).json({ message: 'Car not found' });
+
+  car.status = 'Rejected';
+  car.rejectionReason = reason || 'No reason provided';
+  await car.save();
+
+  await Notification.create({
+    message: `Your car listing (${car.brand} ${car.model}) was rejected. Reason: ${car.rejectionReason}`,
+    recipientRole: 'customer',
+    user: car.seller,
+    car: car._id
+  });
+
+  res.status(200).json({ success: true, message: 'Car rejected' });
+});
+
+// GET /api/cars/pending/review - Admin fetches all pending customer listings
+const getPendingCustomerCars = asyncHandler(async (req, res) => {
+  const cars = await Car.find({ listedByAdmin: false, status: 'Pending' }).populate('seller', 'name email');
+  res.status(200).json(cars);
+});
+
+// PUT /api/cars/:id - Admin updates car details
 const updateCar = asyncHandler(async (req, res) => {
   const car = await Car.findById(req.params.id);
-  if (car) {
-    car.name = req.body.name || car.name;
-    car.brand = req.body.brand || car.brand;
-    car.model = req.body.model || car.model;
-    car.price = req.body.price || car.price;
-    car.condition = req.body.condition || car.condition;
-    car.description = req.body.description || car.description;
-    
-    const updatedCar = await car.save();
-    res.json(updatedCar);
-  } else {
-    res.status(404).json({ message: "Car not found" });
-  }
+  if (!car) return res.status(404).json({ message: 'Car not found' });
+
+  Object.assign(car, req.body);
+  const updated = await car.save();
+  res.json(updated);
 });
 
-// Delete a car
+// DELETE /api/cars/:id - Delete a car
 const deleteCar = asyncHandler(async (req, res) => {
   const car = await Car.findById(req.params.id);
-  if (car) {
-    await car.remove();
-    res.json({ message: "Car deleted successfully" });
-  } else {
-    res.status(404).json({ message: "Car not found" });
-  }
+  if (!car) return res.status(404).json({ message: 'Car not found' });
+
+  await car.remove();
+  res.json({ message: 'Car deleted successfully' });
 });
 
-module.exports = { getCars, getCarById, createCar, updateCar, deleteCar };
+module.exports = {
+  getCars,
+  getCarById,
+  createCar,
+  postCustomerCar,
+  approveCarListing,
+  rejectCarListing,
+  getPendingCustomerCars,
+  updateCar,
+  deleteCar
+};

@@ -51,7 +51,14 @@ export const carAPI = {
     const response = await api.post('/cars', carData);
     return response.data;
   },
-
+  
+   // Submit car listing (Customer)
+  submitCustomerCar: async (carData) => {
+    const response = await api.post('/cars/customer', carData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return response.data;
+  },
   // Update car listing
   updateCar: async (id, carData) => {
     const response = await api.put(`/cars/${id}`, carData);

@@ -21,43 +21,44 @@ const AdminDashboard = () => {
   ]);
 
   const adminActions = [
-    {
-      title: 'Add Car Listing',
-      description: 'Add a new car to the listings',
-      icon: '/images/icons/add-car.png',
-      action: () => navigate('/admin/add-car')
-    },
-    {
-      title: 'Manage Users',
-      description: 'View and manage user accounts',
-      icon: '/images/icons/users.png',
-      action: () => console.log('Navigate to user management')
-    },
-    {
-      title: 'Review Listings',
-      description: 'Review and approve car listings',
-      icon: '/images/icons/review.png',
-      action: () => console.log('Navigate to listings review')
-    },
-    {
-      title: 'Manage Car Deliveries',
-      description: 'View and manage car deliveries',
-      icon: '/images/icons/delivery.png',
-      action: () => console.log('Navigate to car deliveries')
-    },
-    {
-      title: 'Transaction History',
-      description: 'View all transaction records',
-      icon: '/images/icons/transactions.png',
-      action: () => console.log('Navigate to transactions')
-    },
-    {
-      title: 'System Settings',
-      description: 'Configure system parameters',
-      icon: '/images/icons/settings.png',
-      action: () => console.log('Navigate to settings')
-    }
-  ];
+  {
+    title: 'Add Car Listing',
+    description: 'Add a new car to the listings',
+    icon: '/images/icons/add-car.png',
+    action: () => navigate('/admin/add-car')
+  },
+  {
+    title: 'Manage Users',
+    description: 'View and manage user accounts',
+    icon: '/images/icons/users.png',
+    action: () => console.log('Navigate to user management')
+  },
+  {
+    title: 'Review Listings',
+    description: 'Review and approve car listings',
+    icon: '/images/icons/review.png',
+    action: () => navigate('/admin/review-listings') // ✅ FIXED
+  },
+  {
+    title: 'Manage Car Deliveries',
+    description: 'View and manage car deliveries',
+    icon: '/images/icons/delivery.png',
+    action: () => console.log('Navigate to car deliveries')
+  },
+  {
+    title: 'Transaction History',
+    description: 'View all transaction records',
+    icon: '/images/icons/transactions.png',
+    action: () => console.log('Navigate to transactions')
+  },
+  {
+    title: 'System Settings',
+    description: 'Configure system parameters',
+    icon: '/images/icons/settings.png',
+    action: () => console.log('Navigate to settings')
+  }
+];
+
 
   return (
     <div className="admin-dashboard">

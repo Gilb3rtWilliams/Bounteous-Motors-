@@ -46,7 +46,7 @@ const Dashboard = () => {
       title: 'Order a Car',
       description: 'Order a car and schedule test drives',
       icon: '/images/icons/order.png',
-      action : () => navigate('/order-car')
+      link: 'order-car',
     },
     {
       title: 'Schedule Test Drive',
@@ -76,7 +76,8 @@ const Dashboard = () => {
       title: 'Post a Car for Sale',
       description: 'Post a new car for sale',
       icon: '/images/icons/add-car.png',
-      action: () => navigate('/post-car')
+      link: 'post-car',
+      
     },
     {
       title: 'Manage Orders',
@@ -130,10 +131,16 @@ const Dashboard = () => {
         <div className="actions-grid">
           {navigationCards.map((card, index) => (
             <div 
-              key={index} 
-              className="action-card"
-              onClick={() => navigate(card.link)}
-            >
+  key={index} 
+  className="action-card"
+  onClick={() => {
+    if (card.action) {
+      card.action();
+    } else if (card.link) {
+      navigate(`/${card.link}`);
+    }
+  }}
+>
               <img src={card.icon} alt={card.title} className="action-icon-image" />
               <h3>{card.title}</h3>
               <p>{card.description}</p>

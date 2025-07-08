@@ -21,6 +21,7 @@ import AdminProfile from "./pages/AdminProfile";
 import OrderCar from "./pages/OrderCar";
 import AddCarListing from "./pages/AddCarListing";
 import PostCar from "./pages/PostCar";
+import AdminReviewListings from './pages/AdminReviewListings';
 
 const App = () => {
   return (
@@ -59,6 +60,14 @@ const App = () => {
                   </ProtectedRoute>
                 }
                 />
+                <Route
+                path="/admin/review-listings"
+                element={
+                  <ProtectedRoute requiredRole="admin">
+                    <AdminReviewListings />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/dashboard" 
                 element={

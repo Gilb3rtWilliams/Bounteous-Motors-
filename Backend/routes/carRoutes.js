@@ -5,40 +5,47 @@ const {
   getCarById,
   createCar,
   updateCar,
-  deleteCar
+  deleteCar,
+  postCustomerCar,
+  approveCarListing,
+  rejectCarListing,
+  getPendingCustomerCars
 } = require('../controllers/carController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
-
-// Multer setup for image uploads
-const multer = require('multer'); 
+const multer = require('multer');
 const path = require('path');
 
-// Storage configuration
+// Multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
-    const sanitized = file.originalname.replace(/\s+/g, '-'); // Replace spaces with -
+    const sanitized = file.originalname.replace(/\s+/g, '-');
     const uniqueSuffix = `${Date.now()}-${sanitized}`;
     cb(null, uniqueSuffix);
   }
 });
-
 const upload = multer({ storage });
 
 // 🔓 Public routes
 router.get('/', getCars);
-router.get('/:id', getCarById);
 
-// 🔒 Protected routes
+// 🛡 Protected routes
 router.use(protect);
 
-// 🆕 Create car with image upload (admin only)
-router.post('/', adminOnly, upload.array('images'), createCar);
+// 🚗 Customer submits car for review — MUST BE BEFORE /:id
+router.post('/customer', upload.array('images'), postCustomerCar);
 
-// 🛠 Update & delete cars (admin only)
+// ✅ Admin-only routes
+router.post('/', adminOnly, upload.array('images'), createCar);
 router.put('/:id', adminOnly, updateCar);
 router.delete('/:id', adminOnly, deleteCar);
+router.put('/:id/approve', adminOnly, approveCarListing);
+router.put('/:id/reject', adminOnly, rejectCarListing);
+router.get('/pending/review', adminOnly, getPendingCustomerCars);
+
+// 👇 This MUST come last
+router.get('/:id', getCarById);
 
 module.exports = router;

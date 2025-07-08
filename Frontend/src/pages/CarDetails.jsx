@@ -60,12 +60,12 @@ const CarDetails = () => {
 
       <div className="car-details-grid">
         <div className="car-gallery">
-  <CarImageSlideshow
-    images={car.images}
-    height="700px"
-    altPrefix={`${car.make} ${car.model}`}
-  />
-</div>
+          <CarImageSlideshow
+            images={car.images.map(img => `http://localhost:5000${img}`)}
+            height="300px"
+            altPrefix={`${car.year} ${car.brand} ${car.model}`}
+          />
+        </div>
 
 
 

@@ -47,8 +47,12 @@ const CarListings = () => {
     const fetchCars = async () => {
       try {
         const carsData = await carAPI.getAllCars();
-        if (Array.isArray(carsData)) {  // Verify the data is an array
-          setCars(carsData);
+        if (Array.isArray(carsData)) {
+          // ✅ Only show approved listings
+          const approvedCars = carsData.filter(
+            car => car.status?.toLowerCase() === 'approved'
+          );
+          setCars(approvedCars);
         } else {
           throw new Error('Invalid data format received');
         }
@@ -68,19 +72,19 @@ const CarListings = () => {
   };
 
   const handleAddToWatchlist = async (carId) => {
-  if (!user) {
-    navigate('/login');
-    return;
-  }
+    if (!user) {
+      navigate('/login');
+      return;
+    }
 
-  try {
-    await carAPI.addToWatchlist(user.id, carId);
-    alert('Car added to watchlist!');
-  } catch (error) {
-    console.error('Failed to add to watchlist:', error);
-    alert('Failed to add to watchlist. Please try again.');
-  }
-};
+    try {
+      await carAPI.addToWatchlist(user.id, carId);
+      alert('Car added to watchlist!');
+    } catch (error) {
+      console.error('Failed to add to watchlist:', error);
+      alert('Failed to add to watchlist. Please try again.');
+    }
+  };
 
 
   const handleFilterChange = (e) => {
@@ -216,10 +220,11 @@ const CarListings = () => {
             <div key={car._id} className="car-card">
               <div className="car-image" style={{ height: "300px", overflow: "hidden" }}>
                 <CarImageSlideshow
-                  images={car.images}
+                  images={car.images.map(img => `http://localhost:5000${img}`)}
                   height="300px"
                   altPrefix={`${car.year} ${car.brand} ${car.model}`}
                 />
+
               </div>
               <div className="car-details">
                 <h3>{`${car.year} ${car.brand} ${car.model}`}</h3>
