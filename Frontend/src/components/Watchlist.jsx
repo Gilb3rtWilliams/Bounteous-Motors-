@@ -50,7 +50,10 @@ const Watchlist = ({ userId }) => {
       {watchlist.map((car) => (
         <div key={car._id} className="watchlist-card">
           <div className="watchlist-image">
-            <CarImageSlideshow images={car.images} height="200px" altPrefix={`${car.year} ${car.model}`} />
+            <CarImageSlideshow 
+            images={car.images.map(img => `http://localhost:5000${img}`)} 
+            height="200px" 
+            altPrefix={`${car.year} ${car.model}`} />
           </div>
           <div className="watchlist-details">
             <h3>{`${car.year} ${car.brand} ${car.model}`}</h3>

@@ -126,11 +126,18 @@ const postCustomerCar = asyncHandler(async (req, res) => {
   const savedCar = await newCar.save();
 
   await Notification.create({
-    message: `New car listing submitted by ${req.user.name}`,
-    recipientRole: 'admin',
-    user: req.user._id,
-    car: savedCar._id
-  });
+  title: `New Car Listing: ${brand} ${model}`,
+  message: `New car listing submitted by ${req.user.name}`,
+  type: 'car_listing_pending',
+  priority: 'medium',
+  recipientRole: 'admin',
+  user: req.user._id,
+  car: savedCar._id,
+  action: {
+    label: 'Review Listing',
+    link: `/admin/review-listings`
+  }
+});
 
   res.status(201).json({ success: true, car: savedCar });
 });
@@ -145,11 +152,18 @@ const approveCarListing = asyncHandler(async (req, res) => {
   await car.save();
 
   await Notification.create({
-    message: `Your car listing (${car.brand} ${car.model}) has been approved.`,
-    recipientRole: 'customer',
-    user: car.seller,
-    car: car._id
-  });
+  title: 'Listing Approved',
+  message: `Your car listing (${car.brand} ${car.model}) has been approved.`,
+  type: 'car_listing_approved',
+  priority: 'low',
+  recipientRole: 'customer',
+  user: car.seller,
+  car: car._id,
+  action: {
+    label: 'View Listing',
+    link: `/car/${car._id}`
+  }
+});
 
   res.status(200).json({ success: true, message: 'Car approved' });
 });
@@ -166,10 +180,17 @@ const rejectCarListing = asyncHandler(async (req, res) => {
   await car.save();
 
   await Notification.create({
-    message: `Your car listing (${car.brand} ${car.model}) was rejected. Reason: ${car.rejectionReason}`,
-    recipientRole: 'customer',
-    user: car.seller,
-    car: car._id
+  title: 'Listing Rejected',
+  message: `Your listing (${car.brand} ${car.model}) was rejected. Reason: ${car.rejectionReason}`,
+  type: 'car_listing_rejected',
+  priority: 'high',
+  recipientRole: 'customer',
+  user: car.seller,
+  car: car._id,
+  action: {
+    label: 'View Listing',
+    link: `/car/${car._id}`
+  }
   });
 
   res.status(200).json({ success: true, message: 'Car rejected' });

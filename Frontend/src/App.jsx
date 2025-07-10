@@ -22,87 +22,105 @@ import OrderCar from "./pages/OrderCar";
 import AddCarListing from "./pages/AddCarListing";
 import PostCar from "./pages/PostCar";
 import AdminReviewListings from './pages/AdminReviewListings';
+import ViewNotifications from './pages/ViewNotifications';
+import AdminNotifications from './pages/AdminNotifications';
 
 const App = () => {
   return (
     <div className="app">
-          <Navbar />
-          <main>
-            <ToastContainer position="top-right" autoClose={2500} hideProgressBar />
-            <Routes>
-              <Route path="/" element={<Homepage />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/admin-login" element={<AdminLogin />} />
-              <Route path="/admin-register" element={<AdminRegister />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/cars" element={<CarListings />} />
-              <Route path="/car/:id" element={<CarDetails />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/sell" element={<SellCar />} />
-              <Route path="/order" element={<OrderCar />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route 
-                path="/post-car" 
-                element={
-                  <ProtectedRoute requiredRole="customer">
-                    <PostCar />
-                  </ProtectedRoute>
-                }
-              />
-              <Route 
-                path="/admin/add-car" 
-                element={
-                  <ProtectedRoute requiredRole="admin">
-                    <AddCarListing />
-                  </ProtectedRoute>
-                }
-                />
-                <Route
-                path="/admin/review-listings"
-                element={
-                  <ProtectedRoute requiredRole="admin">
-                    <AdminReviewListings />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard" 
-                element={
-                  <ProtectedRoute requiredRole="customer">
-                    <Dashboard />
-                  </ProtectedRoute>
-                } 
-              />  
-              <Route 
-                path="/admin-dashboard" 
-                element={
-                  <ProtectedRoute requiredRole="admin">
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route 
-                path="/admin-profile" 
-                element={
-                  <ProtectedRoute requiredRole="admin">
-                    <AdminProfile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/profile" 
-                element={
-                  <ProtectedRoute requiredRole="customer">
-                    <Profile />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
+      <Navbar />
+      <main>
+        <ToastContainer position="top-right" autoClose={2500} hideProgressBar />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admin-register" element={<AdminRegister />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cars" element={<CarListings />} />
+          <Route path="/car/:id" element={<CarDetails />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/sell" element={<SellCar />} />
+          <Route path="/order" element={<OrderCar />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route
+            path="/admin/notifications"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminNotifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute requiredRole="customer">
+                <ViewNotifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/post-car"
+            element={
+              <ProtectedRoute requiredRole="customer">
+                <PostCar />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/add-car"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AddCarListing />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/review-listings"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminReviewListings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute requiredRole="customer">
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin-dashboard"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin-profile"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminProfile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute requiredRole="customer">
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
     </div>
   );
 };

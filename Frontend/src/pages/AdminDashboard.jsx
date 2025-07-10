@@ -40,6 +40,12 @@ const AdminDashboard = () => {
     action: () => navigate('/admin/review-listings') // ✅ FIXED
   },
   {
+    title: 'Admin Notificatons',
+    description: 'View admin notifications',
+    icon: '/images/icons/notifications.png',
+    action: () => navigate('/admin/notifications') // ✅ FIXED
+  },
+  {
     title: 'Manage Car Deliveries',
     description: 'View and manage car deliveries',
     icon: '/images/icons/delivery.png',

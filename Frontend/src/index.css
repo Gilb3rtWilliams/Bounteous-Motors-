@@ -9,6 +9,7 @@
 body {
   font-family: 'Times New Roman', Times, serif;
   line-height: 1.6;
+  height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

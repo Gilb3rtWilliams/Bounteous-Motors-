@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
 import axiosInstance from '../api/axios';
+import CustomerSlideshow from '../components/CustomerSlideshow';
 import { useAuth } from '../hooks/useAuth';
 import '../css/PostCar.css'; // Similar to AddCarListing.css
 import {
@@ -125,6 +126,7 @@ const PostCar = () => {
 
   return (
     <div className="post-car-container">
+      <CustomerSlideshow />
       <h1><strong>Post Your Car</strong></h1>
 
       <div className="steps-indicator">

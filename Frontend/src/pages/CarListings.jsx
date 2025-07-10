@@ -22,6 +22,8 @@ const CarListings = () => {
     year: '',
     condition: ''
   });
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   const handleOrder = async (carId) => {
     try {
@@ -49,9 +51,10 @@ const CarListings = () => {
         const carsData = await carAPI.getAllCars();
         if (Array.isArray(carsData)) {
           // ✅ Only show approved listings
-          const approvedCars = carsData.filter(
-            car => car.status?.toLowerCase() === 'approved'
+          const approvedCars = carsData.filter(car =>
+            ['approved', 'available', 'reserved', 'sold'].includes(car.status?.toLowerCase())
           );
+
           setCars(approvedCars);
         } else {
           throw new Error('Invalid data format received');
@@ -66,6 +69,28 @@ const CarListings = () => {
 
     fetchCars();
   }, []);
+
+  const filteredCars = cars.filter(car => {
+  const matchesSearch = (
+    car.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    car.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    String(car.year).includes(searchTerm)
+  );
+
+  const matchesFilters =
+    (filters.make ? car.brand.toLowerCase() === filters.make : true) &&
+    (filters.year ? String(car.year) === filters.year : true) &&
+    (filters.condition ? car.condition.toLowerCase() === filters.condition : true) &&
+    (filters.priceRange ? (() => {
+      const price = car.price;
+      const [min, max] = filters.priceRange.split('-');
+      if (filters.priceRange === '40000+') return price > 40000;
+      return price >= parseInt(min) && price <= parseInt(max);
+    })() : true);
+
+  return matchesSearch && matchesFilters;
+});
+
 
   const handleViewDetails = (carId) => {
     navigate(`/car/${carId}`);
@@ -138,7 +163,10 @@ const CarListings = () => {
             type="text"
             placeholder="Search by make, model, or year..."
             className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
+
         </div>
       </header>
 
@@ -213,7 +241,7 @@ const CarListings = () => {
       </div>
 
       <div className="cars-grid">
-        {cars.map((car) => {
+        {filteredCars.map((car) => {
           console.log("Rendering images for:", car._id, car.images);
 
           return (

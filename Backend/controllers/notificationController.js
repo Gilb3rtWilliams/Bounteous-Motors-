@@ -1,36 +1,63 @@
 const asyncHandler = require("express-async-handler");
 const Notification = require("../models/Notification");
 
-// Fetch all notifications for a user
+// GET /api/notifications - Get all notifications for logged in user
 const getNotifications = asyncHandler(async (req, res) => {
-  const notifications = await Notification.find({ recipient: req.user.id }); // Ensure correct filtering
+  
+  const notifications = await Notification.find({
+    user: req.user.id,
+    recipientRole: req.user.role // 🔥 Filter by the user's role
+  })
+    .populate('car', 'brand model year')
+    .populate('order', 'totalAmount status')
+    .sort({ createdAt: -1 });
+
   res.json(notifications);
 });
 
-// Create a new notification
+// POST /api/notifications - Create a notification
 const createNotification = asyncHandler(async (req, res) => {
-  const { recipient, message } = req.body;
+  const {
+    title,
+    message,
+    type,
+    priority = 'low',
+    recipientRole,
+    user, // Optional: can be set manually or default to req.user.id
+    car,
+    order,
+    action
+  } = req.body;
 
-  if (!recipient || !message) {
-    return res.status(400).json({ message: "Recipient and message are required" });
+  if (!title || !message || !type || !recipientRole) {
+    return res.status(400).json({ message: "Missing required fields: title, message, type, recipientRole" });
   }
 
-  const notification = new Notification({ recipient, message, isRead: false });
-  await notification.save();
+  const notification = await Notification.create({
+    title,
+    message,
+    type,
+    priority,
+    recipientRole,
+    user: user || req.user._id,
+    car,
+    order,
+    action
+  });
 
   res.status(201).json({ message: "Notification created successfully", notification });
 });
 
-// Mark a notification as read
+// PUT /api/notifications/:id/read - Mark notification as read
 const markAsRead = asyncHandler(async (req, res) => {
   const notification = await Notification.findById(req.params.id);
-  if (notification) {
-    notification.isRead = true;
-    await notification.save();
-    res.json({ message: "Notification marked as read" });
-  } else {
-    res.status(404).json({ message: "Notification not found" });
+  if (!notification) {
+    return res.status(404).json({ message: "Notification not found" });
   }
+
+  notification.isRead = true;
+  await notification.save();
+  res.json({ message: "Notification marked as read", notification });
 });
 
 module.exports = { getNotifications, createNotification, markAsRead };

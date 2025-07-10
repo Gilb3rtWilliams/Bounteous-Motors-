@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaUserShield, FaEnvelope, FaKey, FaCheck } from 'react-icons/fa';
 import AuthContext from '../context/AuthContext';
 import Navbar from '../components/Navbar';
+import AdminSlideshow from '../components/AdminSlideshow';
 import Footer from '../components/Footer';
 import avatarPlaceholder from '../assets/avatar-placeholder.png';
 import '../css/Profile.css';
@@ -82,6 +83,7 @@ const AdminProfile = () => {
   return (
     <div className="profile-page">
       <Navbar />
+      <AdminSlideshow />
       <div className="dashboard-container animate-fade-in">
         {/* Admin Header */}
         <div className="dashboard-header profile-summary">

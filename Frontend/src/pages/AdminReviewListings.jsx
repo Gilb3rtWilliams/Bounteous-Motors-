@@ -3,6 +3,7 @@ import axiosInstance from '../api/axios';
 import Swal from 'sweetalert2';
 import { useAuth } from '../hooks/useAuth';
 import '../css/AdminReviewListings.css';
+import AdminSlideshow from '../components/AdminSlideshow';
 import { FaCheck, FaTimes, FaEye } from 'react-icons/fa';
 
 const AdminReviewListings = () => {
@@ -70,7 +71,7 @@ const AdminReviewListings = () => {
   return (
     <div className="admin-review-container">
       <h1>Review Pending Car Listings</h1>
-
+      <AdminSlideshow />
       {pendingCars.length === 0 ? (
         <p className="no-pending">No pending listings at the moment.</p>
       ) : (
