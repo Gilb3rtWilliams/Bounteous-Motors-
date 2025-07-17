@@ -147,24 +147,24 @@ section h2 {
 }
 
 /* Features Section */
-.features-section {
+.homepage .features-section {
   background-color: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
   color: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
 
-.features-grid {
+.homepage .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 2rem;
   justify-items: center;
 }
 
-.features-section h2 {
+.homepage .features-section h2 {
   color: red;
   font-family: 'Times New Roman', Times, serif;
 }
 
-.features-section .feature-item {
+.homepage .features-section .feature-item {
   padding: 2rem;
   background-color: linear-gradient(to right, #000000, #797979);
   border-radius: 8px;
@@ -172,18 +172,18 @@ section h2 {
   transition: transform 0.3s ease;
 }
 
-.features-section .feature-item:hover {
+.homepage .features-section .feature-item:hover {
   transform: translateY(-5px);
 }
 
-.features-section .feature-item h3 {
+.homepage .features-section .feature-item h3 {
   color: red;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-family: 'Times New Roman', Times, serif;
 }
 
-.features-section .feature-item p {
+.homepage .features-section .feature-item p {
   color: white;
   line-height: 1.6;
   font-family: 'Times New Roman', Times, serif;

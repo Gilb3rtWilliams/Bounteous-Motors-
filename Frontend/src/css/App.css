@@ -1,8 +1,27 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 2 rem;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 2 rem;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+.Toastify {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.Toastify:empty {
+  display: none;
 }
 
 .logo {

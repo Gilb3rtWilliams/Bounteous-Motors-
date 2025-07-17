@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import CustomerSlideshow from '../components/CustomerSlideshow';
 import axiosInstance from '../api/axios';
 import AuthContext from '../context/AuthContext';
-import '../css/ViewNotifications.css';
+import '../css/Notifications.css';
 
 import {
   FaBell, FaCheckCircle, FaInfoCircle, FaExclamationCircle,

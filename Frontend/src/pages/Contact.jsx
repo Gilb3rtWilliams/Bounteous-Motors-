@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Slideshow from '../components/Slideshow';
 import '../css/Contact.css';
+import useTypingEffect from '../hooks/useTypingEffect'; // Import the custom hook
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -42,14 +43,18 @@ const Contact = () => {
     }, 3000);
   };
 
+  // Typing effect for the contact page header
+  const welcomeMessage = useTypingEffect("Contact Us", 60);
+  const subMessage = useTypingEffect("We're here to help and answer any questions you might have", 60);
+
   return (
     <div className="contact-page">
       <Slideshow />
       <Navbar />
       <div className="contact-content">
         <section className="contact-hero">
-          <h1>Contact Us</h1>
-          <p>We're here to help and answer any questions you might have</p>
+          <h1 className="typing-header">{welcomeMessage}</h1>
+          <p className="typing-subheader">{subMessage}</p>
         </section>
 
         <div className="contact-container">

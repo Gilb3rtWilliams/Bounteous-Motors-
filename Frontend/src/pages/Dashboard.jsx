@@ -4,44 +4,46 @@ import '../css/Dashboard.css';
 import AuthContext from '../context/AuthContext';
 import CustomerSlideshow from '../components/CustomerSlideshow';
 import Watchlist from '../components/Watchlist';
+import useTypingEffect from '../hooks/useTypingEffect'; // Import the custom hook
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [userStats, setUserStats] = useState({
     buyingStats: {
       totalPurchases: 0,
       pendingPurchases: 0,
-      savedCars: 0
+      savedCars: 0,
     },
     sellingStats: {
       activeListing: 0,
       soldCars: 0,
-      pendingDeals: 0
-    }
+      pendingDeals: 0,
+    },
   });
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const response = await fetch(`/api/users/${user.id}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      });
+      try {
+        const response = await fetch(`/api/users/${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch user profile');
+        if (!response.ok) throw new Error('Failed to fetch user profile');
+        const data = await response.json();
+        setUserStats(data.stats);
+      } catch (error) {
+        console.error(error);
       }
-
-      const data = await response.json();
-      setUserStats(data.stats);
     };
 
     fetchUserProfile();
   }, [user.id, user.token]);
 
-  const navigationCards = [
+  const customerActions = [
     {
       title: 'Order a Car',
       description: 'Order a car and schedule test drives',
@@ -51,55 +53,57 @@ const Dashboard = () => {
     {
       title: 'Schedule Test Drive',
       description: 'Schedule a test drive with a car seller',
+      icon: '/images/icons/test-drive.png',
       link: 'schedule-test-drive',
-      icon: '/images/icons/test-drive.png'
     },
     {
       title: 'Trade in a Car',
       description: 'Trade in your car for a new one',
+      icon: '/images/icons/trade-in.png',
       link: 'trade-in',
-      icon: '/images/icons/trade-in.png'
-    },
-    {
-      title: 'View Negotiations',
-      description: 'View and manage negotiations for your posted cars',
-      link: 'negotiations',
-      icon: '/images/icons/negotiations.png'
     },
     {
       title: 'View Notifications',
-      description: 'View notifications from car sellers',
+      description: 'Notifications from sellers',
+      icon: '/images/icons/notifications.png',
       link: 'notifications',
-      icon: '/images/icons/notifications.png'
     },
     {
       title: 'Post a Car for Sale',
-      description: 'Post a new car for sale',
+      description: 'List your own car for sale',
       icon: '/images/icons/add-car.png',
       link: 'post-car',
-      
     },
     {
       title: 'Manage Orders',
-      description: 'Manage orders for cars you posted',
-      link: 'manage-orders',
-      icon: '/images/icons/orders.png'
+      description: 'Track and manage orders of your posted cars',
+      icon: '/images/icons/orders.png',
+      link: 'my-orders',
     },
     {
       title: 'Manage Negotiations',
-      description: 'Manage negotiations for cars you posted',
+      description: 'View and manage incoming offers',
+      icon: '/images/icons/manage-negotiations.png',
       link: 'manage-negotiations',
-      icon: '/images/icons/manage-negotiations.png'
-    }
+    },
+    {
+      title: 'View Negotiations',
+      description: 'View offers made to your listings',
+      icon: '/images/icons/negotiations.png',
+      link: 'negotiations',
+    },
   ];
 
+  const welcomeSubtitle = useTypingEffect("Here's your Bounteous Motors activity summary", 60);
+
   return (
-    <div className="dashboard-container">
+    <div className="admin-dashboard">
       <CustomerSlideshow />
+
       <div className="dashboard-header">
         <div className="welcome-section">
           <h1>Welcome back, {user?.name || 'User'}!</h1>
-          <p className="welcome-subtitle">Your Bounteous Motors Dashboard</p>
+          <p className="welcome-subtitle">{welcomeSubtitle}</p>
         </div>
       </div>
 
@@ -107,51 +111,43 @@ const Dashboard = () => {
         <div className="stat-card">
           <h3>Total Purchases</h3>
           <p>{userStats.buyingStats.totalPurchases}</p>
-          <span className="stat-trend positive">↑ Active Buyer</span>
         </div>
         <div className="stat-card">
           <h3>Active Listings</h3>
           <p>{userStats.sellingStats.activeListing}</p>
-          <span className="stat-trend">Current</span>
         </div>
         <div className="stat-card">
           <h3>Cars Sold</h3>
           <p>{userStats.sellingStats.soldCars}</p>
-          <span className="stat-trend positive">↑ Good Performance</span>
         </div>
         <div className="stat-card">
           <h3>Saved Cars</h3>
           <p>{userStats.buyingStats.savedCars}</p>
-          <span className="stat-trend">Watchlist</span>
         </div>
       </section>
 
       <section className="admin-actions">
         <h2>Quick Actions</h2>
         <div className="actions-grid">
-          {navigationCards.map((card, index) => (
-            <div 
-  key={index} 
-  className="action-card"
-  onClick={() => {
-    if (card.action) {
-      card.action();
-    } else if (card.link) {
-      navigate(`/${card.link}`);
-    }
-  }}
->
-              <img src={card.icon} alt={card.title} className="action-icon-image" />
-              <h3>{card.title}</h3>
-              <p>{card.description}</p>
+          {customerActions.map((action, index) => (
+            <div
+              key={index}
+              className="action-card"
+              onClick={() => navigate(`/${action.link}`)}
+            >
+              <img src={action.icon} alt={action.title} className="action-icon-image" />
+              <h3>{action.title}</h3>
+              <p>{action.description}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="watchlist-section">
+      <section className="recent-activity">
         <h2>My Watchlist</h2>
-        <Watchlist userId={user?.id} />
+        <div className="activity-list">
+          <Watchlist userId={user?.id} />
+        </div>
       </section>
     </div>
   );

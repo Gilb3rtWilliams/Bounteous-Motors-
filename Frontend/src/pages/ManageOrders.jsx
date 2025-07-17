@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
 import '../css/ManageOrders.css';
+import AdminSlideshow from '../components/AdminSlideshow';
 import {
   FaShippingFast, FaSearch, FaFilter, FaSort,
   FaCheckCircle, FaClock, FaTimesCircle, FaEye,
@@ -96,8 +96,8 @@ const ManageOrders = () => {
   return (
     <div className="manage-orders-page">
       <Navbar />
+      <AdminSlideshow />
       <div className="orders-container">
-        <Sidebar />
         <main className="orders-main">
           <div className="orders-header">
             <h1>Manage Orders</h1>

@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Slideshow from '../components/Slideshow';
 import '../css/About.css';
+import useTypingEffect from '../hooks/useTypingEffect'; // Import the custom hook
 
 const About = () => {
   const milestones = [
@@ -49,14 +50,17 @@ const About = () => {
     "International Automotive Task Force Certification"
   ];
 
+  const welcomeMessage = useTypingEffect("About Bounteous Motors", 60);
+  const subMessage = useTypingEffect("Discover our journey, mission, and commitment to excellence in the automotive industry.", 60);
+
   return (
     <div className="about-page">
       <Slideshow />
       <Navbar />
       <div className="about-content">
         <section className="hero-section">
-          <h1>About Bounteous Motors</h1>
-          <p className="hero-subtitle">East Africa's Premier Automotive Marketplace</p>
+          <h1 className="typing-header">{welcomeMessage}</h1>
+          <p className="typing-subheader">{subMessage}</p>
         </section>
 
         <section className="company-overview">

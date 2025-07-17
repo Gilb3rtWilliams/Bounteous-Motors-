@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import Slideshow from '../components/Slideshow';
 import "../css/Auth.css";
 import "../css/Register.css";
+import useTypingEffect from '../hooks/useTypingEffect'; // Import the custom hook
 
 const AdminRegister = () => {
   const [error, setError] = useState("");
@@ -100,17 +101,20 @@ const AdminRegister = () => {
     }
   };
 
+  // Typing effect for the admin registration page header
+  const welcomeMessage = useTypingEffect("Create Admin Account", 60);
+
   return (
     <div className="auth-page">
       <Navbar />
       <Slideshow />
       <div className="auth-container">
         <div className="auth-form-container register">
-          <h2>Create Admin Account</h2>
+          <h2 className="typing-header">{welcomeMessage}</h2>
           {error && <p className="error-message">{error}</p>}
           {success && <p className="success-message">{success}</p>}
           <form onSubmit={handleSubmit} className="auth-form">
-            <div className="form-group">
+            <div className="auth-form-group">
               <label htmlFor="name">Full Name</label>
               <input
                 type="text"
@@ -122,7 +126,7 @@ const AdminRegister = () => {
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="auth-form-group">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -134,7 +138,7 @@ const AdminRegister = () => {
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="auth-form-group">
               <label htmlFor="password">Password</label>
               <input
                 type="password"
@@ -146,7 +150,7 @@ const AdminRegister = () => {
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="auth-form-group">
               <label htmlFor="confirmPassword">Confirm Password</label>
               <input
                 type="password"
@@ -158,7 +162,7 @@ const AdminRegister = () => {
                 required
               />
             </div>
-            <div className="form-group">
+            <div className="auth-form-group">
               <label htmlFor="adminCode">Admin Code</label>
               <input
                 type="password"

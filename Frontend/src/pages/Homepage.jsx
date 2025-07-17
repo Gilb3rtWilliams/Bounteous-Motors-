@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Slideshow from '../components/Slideshow';
 import Footer from '../components/Footer';
 import "../css/Homepage.css";
+import useTypingEffect from '../hooks/useTypingEffect';
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -86,6 +87,8 @@ const Homepage = () => {
       description: "Professional inspection services for peace of mind"
     }
   ];
+  const welcomeMessage = useTypingEffect("Welcome to Bounteous Motors", 60);
+  const subMessage = useTypingEffect("Your ultimate destination for buying, selling, and trading cars with ease.", 60);
 
   return (
     <div className="homepage">
@@ -95,8 +98,8 @@ const Homepage = () => {
       {/* Welcome Section */}
       <section className="homepage-hero-section">
         <div className="homepage-content">
-          <h1>Welcome to Bounteous Motors</h1>
-          <p>Your ultimate destination for buying, selling, and trading cars with ease.</p>
+          <h1 className="typing-header">{welcomeMessage}</h1>
+          <p className="typing-subheader">{subMessage}</p>
           <div className="buttons">
             <button onClick={() => navigate('/cars')}>View Listings</button>
             <button onClick={() => navigate('/register')} className="cta-button">Get Started</button>

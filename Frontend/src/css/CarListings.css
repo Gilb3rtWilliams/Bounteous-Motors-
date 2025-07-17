@@ -2,31 +2,31 @@
   padding: 2rem;
   max-width: 1400px;
   margin: 80px auto 0;
-  background: #0a0a0a;
+  background: transparent;
   min-height: 100vh;
   color: #fff;
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.listings-header {
+.car-listings-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  background: linear-gradient(to right, #1f1f1f, #3a3a3a);
+  background: linear-gradient(to right, #000000, #797979);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.listings-header h1 {
+.car-listings-header h1 {
   font-size: 2.8rem;
   color: #ff3333;
   margin: 0;
   font-weight: bold;
 }
 
-.subtitle {
+.car-listings-subtitle {
   color: #ccc;
   font-size: 1rem;
   font-weight: 300;
@@ -61,7 +61,7 @@
 }
 
 .filters-section {
-  background: #1e1e1e;
+  background: linear-gradient(to right, #000000, #797979);
   padding: 1.5rem;
   border-radius: 8px;
   margin-bottom: 2rem;
@@ -105,8 +105,8 @@
   gap: 2rem;
 }
 
-.car-card {
-  background: black;
+.car-listings-card {
+  background: linear-gradient(to right, #000000, #797979);
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid #222;
@@ -114,7 +114,7 @@
   transition: all 0.3s ease;
 }
 
-.car-card:hover {
+.car-listings-card:hover {
   transform: scale(1.02);
   box-shadow: 0 6px 30px rgba(255, 0, 0, 0.4);
 }
@@ -125,42 +125,42 @@
   object-fit: cover;
 }
 
-.car-details {
+.car-listings-details {
   padding: 1.5rem;
 }
 
-.car-details h3 {
+.car-listings-details h3 {
   font-size: 1.4rem;
-  color: #ff3333;
+  color: red;
   margin-bottom: 0.5rem;
 }
-.car-details p {
+.car-listings-details p {
   margin: 0.5rem 0;
   color: #aaa;
 }
 
-.car-price {
+.car-listings-price{
   font-size: 1.3rem;
   font-weight: bold;
-  color: #00e676;
+  color: #ffd700 !important;
 }
 
-.car-specs {
+.car-listings-specs {
   margin: 1rem 0;
   font-size: 0.85rem;
-  color: #bbb;
+  color: white;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
-.car-description {
+.car-listings-description {
   font-size: 0.9rem;
-  color: #ccc;
+  color: yellow;
   margin-bottom: 1rem;
 }
 
-.view-details-btn, .order-btn {
+.car-listings-view-details-btn, .car-listings-order-btn {
   display: block;
   width: 100%;
   padding: 0.9rem;
@@ -174,7 +174,7 @@
   transition: background 0.3s ease;
 }
 
-.view-details-btn:hover, .order-btn:hover {
+.car-listings-view-details-btn:hover, .car-listings-order-btn:hover {
   background: #cc0000;
 }
 

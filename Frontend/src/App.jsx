@@ -24,6 +24,9 @@ import PostCar from "./pages/PostCar";
 import AdminReviewListings from './pages/AdminReviewListings';
 import ViewNotifications from './pages/ViewNotifications';
 import AdminNotifications from './pages/AdminNotifications';
+import './css/App.css';
+import ManageOrders from './pages/ManageOrders';
+import MyOrders from './pages/MyOrders';
 
 const App = () => {
   return (
@@ -54,6 +57,20 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/manage-orders"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <ManageOrders />
+              </ProtectedRoute>
+            } />
+            <Route
+            path="/my-orders"
+            element={
+              <ProtectedRoute requiredRole="customer">
+                <MyOrders />
+              </ProtectedRoute>
+            } />
           <Route
             path="/notifications"
             element={

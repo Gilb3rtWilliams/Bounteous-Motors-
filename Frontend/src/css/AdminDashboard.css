@@ -7,7 +7,7 @@
   z-index: 1;
 }
 
-.dashboard-header {
+.admin-dashboard .dashboard-header {
   margin: 2rem 0 3rem;
   padding: 2rem;
   background: linear-gradient(135deg, #000000, #333333);
@@ -16,12 +16,12 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.welcome-section {
+.admin-dashboard .welcome-section {
   text-align: left;
   color: white;
 }
 
-.welcome-section h1 {
+.admin-dashboard .welcome-section h1 {
   font-size: 2.5rem;
   margin: 0;
   font-weight: 600;
@@ -31,21 +31,21 @@
   -webkit-text-fill-color: transparent;
 }
 
-.welcome-subtitle {
+.admin-dashboard .welcome-subtitle {
   font-size: 1.1rem;
   margin: 0.5rem 0 0;
   color: rgba(255, 255, 255, 0.8);
   font-weight: 300;
 }
 
-.stats-overview {
+.admin-dashboard .stats-overview {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
 }
 
-.stat-card {
+.admin-dashboard .stat-card {
   background: linear-gradient(135deg, #1a1a1a, #2e2e2e);
   padding: 1.8rem;
   border-radius: 15px;
@@ -55,19 +55,19 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.stat-card:hover {
+.admin-dashboard .stat-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
-.stat-card h3 {
+.admin-dashboard .stat-card h3 {
   margin: 0;
   color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
   font-weight: 400;
 }
 
-.stat-card p {
+.admin-dashboard .stat-card p {
   margin: 0.8rem 0 0;
   font-size: 2.2rem;
   font-weight: 600;
@@ -77,24 +77,24 @@
   -webkit-text-fill-color: transparent;
 }
 
-.admin-actions {
+.admin-dashboard .admin-actions {
   margin-bottom: 3rem;
 }
 
-.admin-actions h2 {
+.admin-dashboard .admin-actions h2 {
   color: white;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   font-weight: 500;
 }
 
-.actions-grid {
+.admin-dashboard .actions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
 }
 
-.action-card {
+.admin-dashboard .action-card {
   background: linear-gradient(135deg, #1a1a1a, #2e2e2e);
   padding: 2rem 1.5rem;
   border-radius: 15px;
@@ -105,33 +105,33 @@
   text-align: center;
 }
 
-.action-card:hover {
+.admin-dashboard .action-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 40px rgba(255, 0, 0, 0.3);
   border-color: rgba(255, 0, 0, 0.5);
 }
 
-.action-icon-image {
+.admin-dashboard .action-icon-image {
   width: 50px;
   height: 50px;
   margin-bottom: 1rem;
 }
 
-.action-card h3 {
+.admin-dashboard .action-card h3 {
   margin: 0 0 0.8rem 0;
   color: white;
   font-size: 1.3rem;
   font-weight: 500;
 }
 
-.action-card p {
+.admin-dashboard .action-card p {
   margin: 0;
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
-.recent-activity {
+.admin-dashboard .recent-activity {
   background: linear-gradient(135deg, #1a1a1a, #2e2e2e);
   padding: 2rem;
   border-radius: 15px;
@@ -139,18 +139,18 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.recent-activity h2 {
+.admin-dashboard .recent-activity h2 {
   color: white;
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   font-weight: 500;
 }
 
-.activity-list {
+.admin-dashboard .activity-list {
   margin-top: 1.5rem;
 }
 
-.activity-item {
+.admin-dashboard .activity-item {
   display: flex;
   align-items: center;
   padding: 1.2rem;
@@ -158,43 +158,43 @@
   transition: background-color 0.3s ease;
 }
 
-.activity-item:hover {
+.admin-dashboard .activity-item:hover {
   background: rgba(255, 255, 255, 0.05);
 }
 
-.activity-item:last-child {
+.admin-dashboard .activity-item:last-child {
   border-bottom: none;
 }
 
-.activity-icon {
+.admin-dashboard .activity-icon {
   font-size: 1.8rem;
   margin-right: 1.2rem;
   color: #d4af37;
 }
 
-.activity-details {
+.admin-dashboard .activity-details {
   flex: 1;
 }
 
-.activity-details h4 {
+.admin-dashboard .activity-details h4 {
   margin: 0;
   color: white;
   font-size: 1.1rem;
   font-weight: 500;
 }
 
-.activity-details p {
+.admin-dashboard .activity-details p {
   margin: 0.4rem 0;
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
 }
 
-.activity-time {
+.admin-dashboard .activity-time {
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.85rem;
 }
 
-.activity-status {
+.admin-dashboard .activity-status {
   padding: 0.35rem 0.85rem;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -202,13 +202,13 @@
   margin-left: 1rem;
 }
 
-.status-completed {
+.admin-dashboard .status-completed {
   background: rgba(46, 125, 50, 0.2);
   color: #81c784;
   border: 1px solid rgba(129, 199, 132, 0.3);
 }
 
-.status-pending {
+.admin-dashboard .status-pending {
   background: rgba(245, 124, 0, 0.2);
   color: #ffb74d;
   border: 1px solid rgba(255, 183, 77, 0.3);

@@ -3,7 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   margin-top: 80px;
-  background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+  background: transparent;
   color: #eaeaea;
   min-height: calc(100vh - 80px);
   border-radius: 12px;
@@ -28,7 +28,7 @@
 
 .back-button:hover {
   background: #ff4d4d;
-  color: white;
+  color: black;
 }
 
 .car-details-grid {
@@ -74,16 +74,16 @@
 .car-header h1 {
   font-size: 2.2rem;
   font-weight: bold;
-  color: #ff4d4d;
+  color: red;
   margin: 0;
 }
 
 .price-tag {
   font-size: 1.8rem;
   font-weight: 600;
-  background: rgba(255, 0, 0, 0.1);
-  color: #ffffff;
-  border: 1px solid #ff4d4d;
+  background: rgba(255, 187, 0, 0.1);
+  color: gold;
+  border: 1px solid gold;
   padding: 0.5rem 1rem;
   border-radius: 8px;
 }
@@ -148,13 +148,13 @@
   line-height: 1.6;
 }
 
-.features-grid {
+.car-details .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 0.75rem;
 }
 
-.feature-item {
+.car-details .feature-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -162,7 +162,7 @@
   color: #eee;
 }
 
-.feature-dot {
+.car-details .feature-dot {
   width: 6px;
   height: 6px;
   background-color: #ff4d4d;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../css/AdminDashboard.css';
 import AdminSlideshow from '../components/AdminSlideshow';
 import AuthContext from '../context/AuthContext';
+import useTypingEffect from '../hooks/useTypingEffect'; // Import the custom hook
 
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -46,10 +47,10 @@ const AdminDashboard = () => {
     action: () => navigate('/admin/notifications') // ✅ FIXED
   },
   {
-    title: 'Manage Car Deliveries',
-    description: 'View and manage car deliveries',
+    title: 'Manage Car Orders',
+    description: 'View and manage car orders & deliveries',
     icon: '/images/icons/delivery.png',
-    action: () => console.log('Navigate to car deliveries')
+    action: () => navigate('/admin/manage-orders') // ✅ FIXED
   },
   {
     title: 'Transaction History',
@@ -65,6 +66,7 @@ const AdminDashboard = () => {
   }
 ];
 
+ const welcomeSubtitle = useTypingEffect("Here's what's happening at Bounteous Motors today", 60);
 
   return (
     <div className="admin-dashboard">
@@ -73,7 +75,7 @@ const AdminDashboard = () => {
       <div className="dashboard-header">
         <div className="welcome-section">
           <h1>Welcome back, {user?.name || 'Admin'}!</h1>
-          <p className="welcome-subtitle">Here's what's happening at Bounteous Motors today</p>
+          <p className="welcome-subtitle">{welcomeSubtitle}</p>
         </div>
       </div>
 

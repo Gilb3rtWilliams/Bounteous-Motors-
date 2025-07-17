@@ -3,11 +3,16 @@ const Notification = require("../models/Notification");
 
 // GET /api/notifications - Get all notifications for logged in user
 const getNotifications = asyncHandler(async (req, res) => {
-  
-  const notifications = await Notification.find({
-    user: req.user.id,
-    recipientRole: req.user.role // 🔥 Filter by the user's role
-  })
+  const query = {
+    recipientRole: req.user.role // Always filter by role
+  };
+
+  // Only add user-specific filter for customers
+  if (req.user.role === 'customer') {
+    query.user = req.user.id;
+  }
+
+  const notifications = await Notification.find(query)
     .populate('car', 'brand model year')
     .populate('order', 'totalAmount status')
     .sort({ createdAt: -1 });

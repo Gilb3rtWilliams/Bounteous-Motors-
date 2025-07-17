@@ -9,6 +9,7 @@ import "../css/CarListings.css";
 import Slideshow from '../components/Slideshow';
 import Navbar from '../components/Navbar';
 import CarImageSlideshow from '../components/CarImageSlideshow';
+import useTypingEffect from '../hooks/useTypingEffect'; // Import the custom hook
 
 const CarListings = () => {
   const navigate = useNavigate();
@@ -110,7 +111,9 @@ const CarListings = () => {
       alert('Failed to add to watchlist. Please try again.');
     }
   };
-
+  
+  const welcomeMessage = useTypingEffect("Available Vehicles", 60);
+  const subMessage = useTypingEffect("Find your perfect ride from our premium selection", 60);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -147,15 +150,16 @@ const CarListings = () => {
   for (let y = currentYear; y >= 1950; y--) {
     years.push(y);
   }
+ 
 
   return (
     <div className="car-listings-container">
       <Navbar />
       <Slideshow />
-      <header className="listings-header">
-        <div className="header-content">
-          <h1>Available Vehicles</h1>
-          <p className="subtitle">Find your perfect ride from our premium selection</p>
+      <header className="car-listings-header">
+        <div className="car-listings-header-content">
+          <h1>{welcomeMessage}</h1>
+          <p className="car-listings-subtitle">{subMessage}</p>
         </div>
         <div className="search-bar">
           <FaSearch className="search-icon" />
@@ -245,7 +249,7 @@ const CarListings = () => {
           console.log("Rendering images for:", car._id, car.images);
 
           return (
-            <div key={car._id} className="car-card">
+            <div key={car._id} className="car-listings-card">
               <div className="car-image" style={{ height: "300px", overflow: "hidden" }}>
                 <CarImageSlideshow
                   images={car.images.map(img => `http://localhost:5000${img}`)}
@@ -254,18 +258,18 @@ const CarListings = () => {
                 />
 
               </div>
-              <div className="car-details">
+              <div className="car-listings-details">
                 <h3>{`${car.year} ${car.brand} ${car.model}`}</h3>
-                <p className="car-price">${car.price.toLocaleString()}</p>
-                <div className="car-specs">
+                <p className="car-listings-price">${car.price.toLocaleString()}</p>
+                <div className="car-listings-specs">
                   <span><FaCar /><strong>{car.type}</strong></span>
                   <span><BsSpeedometer2 /><strong>{car.mileage || 0} miles</strong></span>
                   <span><BiGasPump /><strong>{car.fuelType || 'N/A'}</strong></span>
                   <span><FaMapMarkerAlt /><strong>{car.location || 'Nairobi'}</strong></span>
                 </div>
-                <p className="car-description">{car.description}</p>
-                <button className="view-details-btn" onClick={() => handleViewDetails(car._id)}>View Details</button>
-                <button className="order-btn" onClick={() => handleOrder(car._id)}>Order Now</button>
+                <p className="car-listings-description">{car.description}</p>
+                <button className="car-listings-view-details-btn" onClick={() => handleViewDetails(car._id)}>View Details</button>
+                <button className="car-listings-order-btn" onClick={() => handleOrder(car._id)}>Order Now</button>
                 <button
                   className="add-watchlist-btn"
                   onClick={() => handleAddToWatchlist(car._id)}
