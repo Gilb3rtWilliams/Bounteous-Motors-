@@ -18,13 +18,13 @@ import Navbar from "./components/Navbar";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRegister from "./pages/AdminRegister";
 import AdminProfile from "./pages/AdminProfile";
-import OrderCar from "./pages/OrderCar";
 import AddCarListing from "./pages/AddCarListing";
 import PostCar from "./pages/PostCar";
 import AdminReviewListings from './pages/AdminReviewListings';
 import ViewNotifications from './pages/ViewNotifications';
 import AdminNotifications from './pages/AdminNotifications';
 import './css/App.css';
+import OrderCar from "./pages/OrderCar";
 import ManageOrders from './pages/ManageOrders';
 import MyOrders from './pages/MyOrders';
 
@@ -47,7 +47,13 @@ const App = () => {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sell" element={<SellCar />} />
-          <Route path="/order" element={<OrderCar />} />
+          <Route
+            path="/order/:carId"
+            element={
+              <ProtectedRoute requiredRole="customer">
+                <OrderCar />
+              </ProtectedRoute>
+            } />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route
             path="/admin/notifications"

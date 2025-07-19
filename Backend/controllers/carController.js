@@ -1,4 +1,3 @@
-
 const asyncHandler = require("express-async-handler");
 const Car = require("../models/Car");
 const Notification = require("../models/Notification");
@@ -22,7 +21,7 @@ const getCarById = asyncHandler(async (req, res) => {
   res.json(car);
 });
 
-// POST /api/cars - Admin creates a car listing
+// POST /api/cars - Admin or Customer creates a car listing
 const createCar = asyncHandler(async (req, res) => {
   const {
     brand, model, year, price, type, mileage,
@@ -32,25 +31,24 @@ const createCar = asyncHandler(async (req, res) => {
     features, status
   } = req.body;
 
-  // Parse features
-  let parsedFeatures = [];
-  if (typeof features === 'string') {
-    parsedFeatures = features.split(',').map(f => f.trim());
-  } else if (Array.isArray(features)) {
-    parsedFeatures = features.map(f => f.trim());
-  }
+  const parsedFeatures = Array.isArray(features)
+    ? features.map(f => f.trim())
+    : typeof features === 'string'
+    ? features.split(',').map(f => f.trim())
+    : [];
 
-  // Uploaded image filenames
   const imagePaths = req.files?.map(file => `/uploads/${file.filename}`) || [];
+
+  const isAdmin = req.user.role === 'admin';
 
   const newCar = new Car({
     brand,
     model,
     year: Number(year),
     price: Number(price),
-    type: type ? type.toLowerCase() : 'used', // Default to 'used' if not provided
+    type: type ? type.toLowerCase() : 'used',
     mileage: mileage ? Number(mileage) : 0,
-    condition: condition ? condition.toLowerCase() : 'used', // Default to 'used' if not provided
+    condition: condition ? condition.toLowerCase() : 'used',
     fuelType,
     transmission,
     location,
@@ -63,83 +61,36 @@ const createCar = asyncHandler(async (req, res) => {
     interiorColor,
     vin,
     bodyStyle,
-    status: status || 'Available',
-    images: imagePaths,
-    seller: req.user._id,
-    listedByAdmin: true
-  });
-
-  const savedCar = await newCar.save();
-  res.status(201).json({
-    success: true,
-    message: 'Car listing created successfully',
-    car: savedCar
-  });
-});
-
-// POST /api/cars/customer - Customer submits a car for review
-const postCustomerCar = asyncHandler(async (req, res) => {
-  const {
-    brand, model, year, price, type, mileage,
-    condition, fuelType, transmission, location,
-    description, engine, horsepower, acceleration,
-    exteriorColor, interiorColor, vin, bodyStyle,
-    features
-  } = req.body;
-
-  // Parse features
-  let parsedFeatures = [];
-  if (typeof features === 'string') {
-    parsedFeatures = features.split(',').map(f => f.trim());
-  } else if (Array.isArray(features)) {
-    parsedFeatures = features.map(f => f.trim());
-  }
-
-  const imagePaths = req.files?.map(file => `/uploads/${file.filename}`) || [];
-
-  const newCar = new Car({
-    brand,
-    model,
-    year: Number(year),
-    price: Number(price),
-    type: type? type.toLowerCase() : 'used', // Default to 'used' if not provided
-    mileage: mileage ? Number(mileage) : 0,
-    condition: condition? condition.toLowerCase() : 'used', // Default to 'used' if not provided
-    fuelType,
-    transmission,
-    location,
-    description,
-    engine,
-    horsepower: horsepower ? Number(horsepower) : undefined,
-    acceleration,
-    features: parsedFeatures,
-    exteriorColor,
-    interiorColor,
-    vin,
-    bodyStyle,
-    status: 'Pending',
-    listedByAdmin: false,
+    status: isAdmin ? (status || 'Available') : 'Pending',
+    listedByAdmin: isAdmin,
     images: imagePaths,
     seller: req.user._id
   });
 
   const savedCar = await newCar.save();
 
-  await Notification.create({
-  title: `New Car Listing: ${brand} ${model}`,
-  message: `New car listing submitted by ${req.user.name}`,
-  type: 'car_listing_pending',
-  priority: 'medium',
-  recipientRole: 'admin',
-  user: req.user._id,
-  car: savedCar._id,
-  action: {
-    label: 'Review Listing',
-    link: `/admin/review-listings`
+  // Notify admin if a customer posted
+  if (!isAdmin) {
+    await Notification.create({
+      title: `New Car Listing: ${brand} ${model}`,
+      message: `New car listing submitted by ${req.user.name}`,
+      type: 'car_listing_pending',
+      priority: 'medium',
+      recipientRole: 'admin',
+      user: req.user._id,
+      car: savedCar._id,
+      action: {
+        label: 'Review Listing',
+        link: `/admin/review-listings`
+      }
+    });
   }
-});
 
-  res.status(201).json({ success: true, car: savedCar });
+  res.status(201).json({
+    success: true,
+    message: 'Car listing created successfully',
+    car: savedCar
+  });
 });
 
 // PUT /api/cars/:id/approve - Admin approves a listing
@@ -152,18 +103,18 @@ const approveCarListing = asyncHandler(async (req, res) => {
   await car.save();
 
   await Notification.create({
-  title: 'Listing Approved',
-  message: `Your car listing (${car.brand} ${car.model}) has been approved.`,
-  type: 'car_listing_approved',
-  priority: 'low',
-  recipientRole: 'customer',
-  user: car.seller,
-  car: car._id,
-  action: {
-    label: 'View Listing',
-    link: `/car/${car._id}`
-  }
-});
+    title: 'Listing Approved',
+    message: `Your car listing (${car.brand} ${car.model}) has been approved.`,
+    type: 'car_listing_approved',
+    priority: 'low',
+    recipientRole: 'customer',
+    user: car.seller,
+    car: car._id,
+    action: {
+      label: 'View Listing',
+      link: `/car/${car._id}`
+    }
+  });
 
   res.status(200).json({ success: true, message: 'Car approved' });
 });
@@ -180,17 +131,17 @@ const rejectCarListing = asyncHandler(async (req, res) => {
   await car.save();
 
   await Notification.create({
-  title: 'Listing Rejected',
-  message: `Your listing (${car.brand} ${car.model}) was rejected. Reason: ${car.rejectionReason}`,
-  type: 'car_listing_rejected',
-  priority: 'high',
-  recipientRole: 'customer',
-  user: car.seller,
-  car: car._id,
-  action: {
-    label: 'View Listing',
-    link: `/car/${car._id}`
-  }
+    title: 'Listing Rejected',
+    message: `Your listing (${car.brand} ${car.model}) was rejected. Reason: ${car.rejectionReason}`,
+    type: 'car_listing_rejected',
+    priority: 'high',
+    recipientRole: 'customer',
+    user: car.seller,
+    car: car._id,
+    action: {
+      label: 'View Listing',
+      link: `/car/${car._id}`
+    }
   });
 
   res.status(200).json({ success: true, message: 'Car rejected' });
@@ -225,7 +176,6 @@ module.exports = {
   getCars,
   getCarById,
   createCar,
-  postCustomerCar,
   approveCarListing,
   rejectCarListing,
   getPendingCustomerCars,

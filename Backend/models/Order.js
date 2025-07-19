@@ -1,39 +1,57 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-  car: {
+  carId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Car",
-    required: true,
+    ref: 'Car',
+    required: true
   },
-  buyer: {
+  buyerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+    ref: 'User',
+    required: true
   },
-  status: {
-    type: String,
-    enum: ["pending", "approved", "rejected"],
-    default: "pending",
+  sellerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   paymentMethod: {
     type: String,
-    enum: ["cash", "credit card", "installments"],
-    required: true,
+    enum: ['credit_card', 'cash'],
+    required: true
   },
-  deliveryLocation: {
+  deliveryOption: {
     type: String,
-    required: true,
+    enum: ['pickup', 'home_delivery'],
+    required: true
   },
-  adminResponse: {
+  pickupDate: {
+    type: Date,
+    required: true
+  },
+  paymentAmount: {
+    type: Number,
+    required: true
+  },
+  orderStatus: {
     type: String,
+    enum: ['Pending', 'Processing', 'Approved', 'Delivered', 'Cancelled'],
+    default: 'Pending'
+  },
+  paymentStatus: {
+    type: String,
+    enum: ['Pending', 'Processing', 'Completed', 'Failed'],
+    default: 'Pending'
+  },
+  timestamps: {
+    approvedAt: Date,
+    deliveredAt: Date,
+    paymentConfirmedAt: Date
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   }
-}, {
-  timestamps: true,
 });
-
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model('Order', orderSchema);

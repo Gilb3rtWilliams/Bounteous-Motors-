@@ -72,6 +72,15 @@ const CarDetails = () => {
         <div className="car-info">
           <div className="car-header">
             <h1>{`${car.year} ${car.brand} ${car.model}`}</h1>
+
+            {/* 🚩 Admin/Seller Label */}
+            <p
+              className={`listing-label ${car.listedByAdmin ? 'admin-label' : 'seller-label'}`}
+              style={{ margin: '4px 0' }}
+            >
+              {car.listedByAdmin ? 'Posted by Admin' : 'Posted by Seller'}
+            </p>
+
             <div className="price-tag">${car.price.toLocaleString()}</div>
           </div>
 

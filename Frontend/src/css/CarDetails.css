@@ -211,3 +211,19 @@
     flex-direction: column;
   }
 }
+.listing-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 5px;
+  display: inline-block;
+  color: white;
+}
+
+.admin-label {
+  background-color: #d10000; /* red */
+}
+
+.seller-label {
+  background-color: #0077cc; /* blue */
+}

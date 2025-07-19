@@ -6,7 +6,6 @@ const {
   createCar,
   updateCar,
   deleteCar,
-  postCustomerCar,
   approveCarListing,
   rejectCarListing,
   getPendingCustomerCars
@@ -15,7 +14,7 @@ const { protect, adminOnly } = require('../middleware/authMiddleware');
 const multer = require('multer');
 const path = require('path');
 
-// Multer storage
+// Multer storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -28,24 +27,23 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// 🔓 Public routes
+// 🔓 Public route
 router.get('/', getCars);
 
-// 🛡 Protected routes
+// 🛡 Protected routes (after this, `req.user` is available)
 router.use(protect);
 
-// 🚗 Customer submits car for review — MUST BE BEFORE /:id
-router.post('/customer', upload.array('images'), postCustomerCar);
+// 🚗 All users (admin or customer) can submit cars through this route
+router.post('/', upload.array('images'), createCar);
 
 // ✅ Admin-only routes
-router.post('/', adminOnly, upload.array('images'), createCar);
 router.put('/:id', adminOnly, updateCar);
 router.delete('/:id', adminOnly, deleteCar);
 router.put('/:id/approve', adminOnly, approveCarListing);
 router.put('/:id/reject', adminOnly, rejectCarListing);
 router.get('/pending/review', adminOnly, getPendingCustomerCars);
 
-// 👇 This MUST come last
+// 👇 Single car fetch must come last to avoid route conflicts
 router.get('/:id', getCarById);
 
 module.exports = router;

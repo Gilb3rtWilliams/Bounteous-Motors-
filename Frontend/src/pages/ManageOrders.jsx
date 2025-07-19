@@ -1,97 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import '../css/ManageOrders.css';
 import AdminSlideshow from '../components/AdminSlideshow';
 import {
   FaShippingFast, FaSearch, FaFilter, FaSort,
-  FaCheckCircle, FaClock, FaTimesCircle, FaEye,
-  FaFileContract, FaMoneyBillWave, FaCarSide
+  FaEye, FaFileContract, FaMoneyBillWave, FaCarSide
 } from 'react-icons/fa';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import '../css/ManageOrders.css';
 
 const ManageOrders = () => {
-  const [orders] = useState([
-    {
-      id: "ORD-2025-001",
-      car: {
-        make: "Rolls-Royce",
-        model: "Phantom",
-        year: 2024,
-        price: 685000,
-        image: "/images/cars/rr-phantom.jpg"
-      },
-      buyer: {
-        name: "James Wilson",
-        email: "james.wilson@email.com",
-        phone: "+1 (555) 123-4567"
-      },
-      status: "Pending",
-      paymentStatus: "Paid",
-      deliveryDate: "2025-04-15",
-      orderDate: "2025-03-28",
-      documents: ["Purchase Agreement", "Insurance", "Registration"],
-      notes: "Requested white glove delivery service"
-    },
-    {
-      id: "ORD-2025-002",
-      car: {
-        make: "Bentley",
-        model: "Continental GT",
-        year: 2024,
-        price: 245000,
-        image: "/images/cars/bentley-gt.jpg"
-      },
-      buyer: {
-        name: "Sarah Chen",
-        email: "sarah.chen@email.com",
-        phone: "+1 (555) 234-5678"
-      },
-      status: "Processing",
-      paymentStatus: "Pending",
-      deliveryDate: "2025-04-20",
-      orderDate: "2025-03-30",
-      documents: ["Purchase Agreement"],
-      notes: "Financing in progress"
-    },
-    {
-      id: "ORD-2025-003",
-      car: {
-        make: "Ferrari",
-        model: "SF90 Stradale",
-        year: 2024,
-        price: 785000,
-        image: "/images/cars/ferrari-sf90.jpg"
-      },
-      buyer: {
-        name: "Michael Brown",
-        email: "michael.brown@email.com",
-        phone: "+1 (555) 345-6789"
-      },
-      status: "Completed",
-      paymentStatus: "Paid",
-      deliveryDate: "2025-03-25",
-      orderDate: "2025-03-10",
-      documents: ["Purchase Agreement", "Insurance", "Registration", "Delivery Receipt"],
-      notes: "Delivered to customer's residence"
-    }
-  ]);
+  const [orders, setOrders] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [sortOption, setSortOption] = useState('newest');
+  const user = JSON.parse(localStorage.getItem('user'));
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case "Completed":
-        return <FaCheckCircle className="status-icon completed" />;
-      case "Processing":
-        return <FaClock className="status-icon processing" />;
-      case "Pending":
-        return <FaTimesCircle className="status-icon pending" />;
-      default:
-        return null;
+  useEffect(() => {
+    fetchOrders();
+  }, );
+
+  const fetchOrders = async () => {
+    try {
+      const { data } = await axios.get('http://localhost:5000/api/orders', {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      setOrders(data.orders);
+    } catch (err) {
+      console.error('❌ Error fetching orders:', err);
+      toast.error('Failed to fetch orders');
     }
   };
 
-  const getStatusClass = (status) => {
-    return status.toLowerCase();
+  const handleStatusChange = async (orderId, field, value) => {
+    try {
+      await axios.patch(`http://localhost:5000/api/orders/update-status/${orderId}`, {
+        field,
+        value,
+      }, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      toast.success(`${field} updated to ${value}`);
+      fetchOrders();
+    } catch (err) {
+      console.error(`❌ Failed to update ${field}:`, err);
+      toast.error(`Error updating ${field}`);
+    }
   };
+
+  const filteredOrders = orders
+    .filter(order => {
+      const query = searchQuery.toLowerCase();
+      const buyer = order.buyerId?.name?.toLowerCase() || '';
+      const car = `${order.carId?.brand || ''} ${order.carId?.model || ''}`.toLowerCase();
+      const id = order._id?.toLowerCase();
+      return (
+        (!query || buyer.includes(query) || car.includes(query) || id.includes(query)) &&
+        (filterStatus === 'all' || order.orderStatus?.toLowerCase() === filterStatus)
+      );
+    })
+    .sort((a, b) => {
+      if (sortOption === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sortOption === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+      if (sortOption === 'price-high') return b.paymentAmount - a.paymentAmount;
+      if (sortOption === 'price-low') return a.paymentAmount - b.paymentAmount;
+      return 0;
+    });
 
   return (
     <div className="manage-orders-page">
@@ -99,155 +74,122 @@ const ManageOrders = () => {
       <AdminSlideshow />
       <div className="orders-container">
         <main className="orders-main">
-          <div className="orders-header">
-            <h1>Manage Orders</h1>
-            <div className="order-stats">
-              <div className="stat-card">
-                <FaShippingFast className="stat-icon" />
+          <h1>Manage Orders</h1>
+
+          {/* === Stats Cards === */}
+          <div className="order-stats">
+            {[
+              { icon: <FaShippingFast />, label: 'Total Orders', value: orders.length },
+              { label: 'Completed', value: orders.filter(o => o.orderStatus === 'Completed').length },
+              { label: 'Processing', value: orders.filter(o => o.orderStatus === 'Processing').length },
+              { label: 'Pending', value: orders.filter(o => o.orderStatus === 'Pending').length }
+            ].map(({ icon, label, value }, idx) => (
+              <div className="stat-card" key={idx}>
+                {icon || <FaShippingFast />}
                 <div className="stat-content">
-                  <span className="stat-value">15</span>
-                  <span className="stat-label">Total Orders</span>
+                  <span className="stat-value">{value}</span>
+                  <span className="stat-label">{label}</span>
                 </div>
               </div>
-              <div className="stat-card">
-                <FaCheckCircle className="stat-icon" />
-                <div className="stat-content">
-                  <span className="stat-value">8</span>
-                  <span className="stat-label">Completed</span>
-                </div>
-              </div>
-              <div className="stat-card">
-                <FaClock className="stat-icon" />
-                <div className="stat-content">
-                  <span className="stat-value">5</span>
-                  <span className="stat-label">Processing</span>
-                </div>
-              </div>
-              <div className="stat-card">
-                <FaTimesCircle className="stat-icon" />
-                <div className="stat-content">
-                  <span className="stat-value">2</span>
-                  <span className="stat-label">Pending</span>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
 
+          {/* === Controls === */}
           <div className="orders-controls">
             <div className="search-bar">
               <FaSearch className="search-icon" />
               <input
                 type="text"
-                placeholder="Search orders by ID, buyer name, or car details..."
+                placeholder="Search orders by ID, buyer, or car..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
               />
             </div>
+
             <div className="filters">
-              <button className="filter-btn">
-                <FaFilter />
-                Filter
-              </button>
-              <select className="status-filter">
+              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="status-filter">
                 <option value="all">All Status</option>
                 <option value="completed">Completed</option>
                 <option value="processing">Processing</option>
                 <option value="pending">Pending</option>
               </select>
-              <select className="sort-filter">
+
+              <select value={sortOption} onChange={e => setSortOption(e.target.value)} className="sort-filter">
                 <option value="newest">Newest First</option>
                 <option value="oldest">Oldest First</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price High to Low</option>
+                <option value="price-low">Price Low to High</option>
               </select>
             </div>
           </div>
 
+          {/* === Table === */}
           <div className="orders-table">
             <table>
               <thead>
                 <tr>
                   <th>Order ID</th>
-                  <th>Car Details</th>
+                  <th>Car</th>
                   <th>Buyer</th>
-                  <th>Order Date</th>
-                  <th>Status</th>
-                  <th>Payment</th>
+                  <th>Date</th>
+                  <th>Order Status</th>
+                  <th>Payment Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {orders.map(order => (
-                  <tr key={order.id} className={getStatusClass(order.status)}>
-                    <td className="order-id">
-                      <span>{order.id}</span>
-                    </td>
-                    <td className="car-details">
+                {filteredOrders.map(order => (
+                  <tr key={order._id}>
+                    <td>{order._id.slice(0, 8).toUpperCase()}</td>
+                    <td>
                       <div className="car-info">
-                        <img src={order.car.image} alt={`${order.car.make} ${order.car.model}`} />
+                        <img src={`http://localhost:5000${order.carId?.images?.[0] || ''}`} alt="car" />
                         <div>
-                          <h4>{order.car.year} {order.car.make} {order.car.model}</h4>
-                          <span className="price">${order.car.price.toLocaleString()}</span>
+                          <h4>{order.carId?.year} {order.carId?.brand} {order.carId?.model}</h4>
+                          <span className="price">${order.paymentAmount?.toLocaleString()}</span>
                         </div>
                       </div>
                     </td>
-                    <td className="buyer-info">
-                      <div>
-                        <h4>{order.buyer.name}</h4>
-                        <span>{order.buyer.email}</span>
-                      </div>
+                    <td>
+                      <h4>{order.buyerId?.name}</h4>
+                      <span>{order.buyerId?.email}</span>
                     </td>
-                    <td className="order-date">
-                      <div>
-                        <span className="date">{order.orderDate}</span>
-                        <span className="delivery">Delivery: {order.deliveryDate}</span>
-                      </div>
+                    <td>
+                      <span>{new Date(order.createdAt).toLocaleDateString()}</span><br />
+                      <span>Pickup: {new Date(order.pickupDate).toLocaleDateString()}</span>
                     </td>
-                    <td className="status">
-                      <div className="status-badge">
-                        {getStatusIcon(order.status)}
-                        <span>{order.status}</span>
-                      </div>
+                    <td>
+                      <select
+                        className="status-select"
+                        value={order.orderStatus}
+                        onChange={e => handleStatusChange(order._id, 'orderStatus', e.target.value)}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Completed">Completed</option>
+                      </select>
                     </td>
-                    <td className={`payment ${order.paymentStatus.toLowerCase()}`}>
-                      <span>{order.paymentStatus}</span>
+                    <td>
+                      <select
+                        className="status-select"
+                        value={order.paymentStatus}
+                        onChange={e => handleStatusChange(order._id, 'paymentStatus', e.target.value)}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Paid">Paid</option>
+                      </select>
                     </td>
                     <td className="actions">
-                      <button className="action-btn view">
-                        <FaEye />
-                        View
-                      </button>
-                      <button className="action-btn documents">
-                        <FaFileContract />
-                        Docs
-                      </button>
-                      {order.status !== "Completed" && (
-                        <>
-                          <button className="action-btn update">
-                            <FaCarSide />
-                            Update
-                          </button>
-                          <button className="action-btn payment">
-                            <FaMoneyBillWave />
-                            Payment
-                          </button>
-                        </>
-                      )}
+                      <button className="action-btn view"><FaEye /> View</button>
+                      <button className="action-btn documents"><FaFileContract /> Docs</button>
+                      <button className="action-btn update"><FaCarSide /> Update</button>
+                      <button className="action-btn payment"><FaMoneyBillWave /> Payment</button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-
-          <div className="pagination">
-            <button className="prev-page">Previous</button>
-            <div className="page-numbers">
-              <button className="active">1</button>
-              <button>2</button>
-              <button>3</button>
-              <span>...</span>
-              <button>10</button>
-            </div>
-            <button className="next-page">Next</button>
           </div>
         </main>
       </div>

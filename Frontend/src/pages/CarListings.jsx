@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaSearch, FaFilter, FaSortAmountDown, FaCar, FaTachometerAlt, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { BiGasPump } from 'react-icons/bi';
 import { BsSpeedometer2 } from 'react-icons/bs';
-import { carAPI, orderAPI } from '../services/api'; // Fixed: Combined imports
+import { carAPI } from '../services/api'; // Fixed: Combined imports
 import { useAuth } from '../hooks/useAuth';
 import "../css/CarListings.css";
 import Slideshow from '../components/Slideshow';
@@ -25,26 +25,6 @@ const CarListings = () => {
   });
   const [searchTerm, setSearchTerm] = useState('');
 
-
-  const handleOrder = async (carId) => {
-    try {
-      if (!user) {
-        navigate('/login');
-        return;
-      }
-      const orderData = {
-        carId,
-        userId: user.id,
-        orderDate: new Date()
-      };
-      const response = await orderAPI.createOrder(orderData);
-      if (response.success) {
-        navigate('/order');
-      }
-    } catch (error) {
-      console.error('Error creating order:', error);
-    }
-  };
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -72,25 +52,25 @@ const CarListings = () => {
   }, []);
 
   const filteredCars = cars.filter(car => {
-  const matchesSearch = (
-    car.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    car.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    String(car.year).includes(searchTerm)
-  );
+    const matchesSearch = (
+      car.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      car.model.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      String(car.year).includes(searchTerm)
+    );
 
-  const matchesFilters =
-    (filters.make ? car.brand.toLowerCase() === filters.make : true) &&
-    (filters.year ? String(car.year) === filters.year : true) &&
-    (filters.condition ? car.condition.toLowerCase() === filters.condition : true) &&
-    (filters.priceRange ? (() => {
-      const price = car.price;
-      const [min, max] = filters.priceRange.split('-');
-      if (filters.priceRange === '40000+') return price > 40000;
-      return price >= parseInt(min) && price <= parseInt(max);
-    })() : true);
+    const matchesFilters =
+      (filters.make ? car.brand.toLowerCase() === filters.make : true) &&
+      (filters.year ? String(car.year) === filters.year : true) &&
+      (filters.condition ? car.condition.toLowerCase() === filters.condition : true) &&
+      (filters.priceRange ? (() => {
+        const price = car.price;
+        const [min, max] = filters.priceRange.split('-');
+        if (filters.priceRange === '40000+') return price > 40000;
+        return price >= parseInt(min) && price <= parseInt(max);
+      })() : true);
 
-  return matchesSearch && matchesFilters;
-});
+    return matchesSearch && matchesFilters;
+  });
 
 
   const handleViewDetails = (carId) => {
@@ -111,7 +91,7 @@ const CarListings = () => {
       alert('Failed to add to watchlist. Please try again.');
     }
   };
-  
+
   const welcomeMessage = useTypingEffect("Available Vehicles", 60);
   const subMessage = useTypingEffect("Find your perfect ride from our premium selection", 60);
 
@@ -150,7 +130,7 @@ const CarListings = () => {
   for (let y = currentYear; y >= 1950; y--) {
     years.push(y);
   }
- 
+
 
   return (
     <div className="car-listings-container">
@@ -256,24 +236,41 @@ const CarListings = () => {
                   height="300px"
                   altPrefix={`${car.year} ${car.brand} ${car.model}`}
                 />
-
               </div>
+
               <div className="car-listings-details">
+                {/* 🚩 Label added here */}
+                <p
+                  className={`listing-label ${car.listedByAdmin ? 'admin-label' : 'seller-label'}`}
+                >
+                  {car.listedByAdmin ? 'Posted by Admin' : 'Posted by Seller'}
+                </p>
+
                 <h3>{`${car.year} ${car.brand} ${car.model}`}</h3>
                 <p className="car-listings-price">${car.price.toLocaleString()}</p>
+
                 <div className="car-listings-specs">
                   <span><FaCar /><strong>{car.type}</strong></span>
                   <span><BsSpeedometer2 /><strong>{car.mileage || 0} miles</strong></span>
                   <span><BiGasPump /><strong>{car.fuelType || 'N/A'}</strong></span>
                   <span><FaMapMarkerAlt /><strong>{car.location || 'Nairobi'}</strong></span>
                 </div>
+
                 <p className="car-listings-description">{car.description}</p>
-                <button className="car-listings-view-details-btn" onClick={() => handleViewDetails(car._id)}>View Details</button>
-                <button className="car-listings-order-btn" onClick={() => handleOrder(car._id)}>Order Now</button>
+
+                <button className="car-listings-view-details-btn" onClick={() => handleViewDetails(car._id)}>
+                  View Details
+                </button>
+
                 <button
-                  className="add-watchlist-btn"
-                  onClick={() => handleAddToWatchlist(car._id)}
+                  className="car-listings-order-btn"
+                  onClick={() => navigate(`/order/${car._id}`)}
                 >
+                  Order Now
+                </button>
+
+
+                <button className="add-watchlist-btn" onClick={() => handleAddToWatchlist(car._id)}>
                   ❤️ Add to Watchlist
                 </button>
               </div>
@@ -281,6 +278,7 @@ const CarListings = () => {
           );
         })}
       </div>
+
       <br />
     </div>
   );
