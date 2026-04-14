@@ -1,0 +1,78 @@
+.terms-page {
+  min-height: 100vh;
+  background: linear-gradient(to right, #000000, #797979);
+  padding: 2rem;
+  min-height: calc(100vh - 80px);
+  margin-top: 80px;
+  color: white;
+}
+
+.terms-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.terms-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.terms-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.terms-section {
+  margin-bottom: 2rem;
+}
+
+.terms-section h2 {
+  color: #ff3333;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #ff3333;
+  padding-bottom: 0.5rem;
+}
+
+.terms-section p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #f0f0f0;
+}
+
+.terms-section ul {
+  list-style-type: disc;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.terms-section li {
+  margin-bottom: 0.5rem;
+  color: #f0f0f0;
+}
+
+.last-updated {
+  text-align: right;
+  font-style: italic;
+  color: #cccccc;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .terms-container {
+    padding: 1rem;
+  }
+
+  .terms-header h1 {
+    font-size: 2rem;
+  }
+
+  .terms-section h2 {
+    font-size: 1.5rem;
+  }
+}

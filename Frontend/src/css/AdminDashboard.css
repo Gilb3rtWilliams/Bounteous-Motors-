@@ -1,0 +1,172 @@
+/* ============================================================
+   BOUNTEOUS MOTORS — Admin Dashboard Extensions
+   Imports and extends shared Dashboard.css
+   ============================================================ */
+
+/* ── Admin Avatar — amber tint to distinguish from customer ── */
+.admin-avatar {
+  background: rgba(232, 160, 32, 0.12) !important;
+  border-color: rgba(232, 160, 32, 0.3) !important;
+  color: var(--amber) !important;
+}
+
+/* ── Admin eyebrow accent line ───────────────────────────── */
+.admin-dashboard-page .dash-eyebrow {
+  color: var(--amber);
+}
+
+.admin-dashboard-page .dash-name {
+  color: var(--amber);
+}
+
+/* ── Admin section tag — amber ───────────────────────────── */
+.admin-dashboard-page .dash-section-tag {
+  color: var(--amber);
+  background: rgba(232, 160, 32, 0.1);
+  border-color: rgba(232, 160, 32, 0.25);
+}
+
+/* Admin typing cursor ── amber */
+.admin-dashboard-page .dash-subtitle::after {
+  color: var(--amber);
+}
+
+/* ── Extra tag classes used only in admin ────────────────── */
+.tag-blue  { background: rgba(40,120,208,0.1);  color: #5ba0ef; border: 1px solid rgba(40,120,208,0.2); }
+.tag-green { background: rgba(40,168,106,0.1);  color: #3dd68a; border: 1px solid rgba(40,168,106,0.2); }
+.tag-gray  { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1); }
+
+/* ── Recent Activity list ────────────────────────────────── */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  animation: fadeSlideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.activity-icon-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  border: 1px solid var(--glass-border2);
+}
+
+/* Inherit accent colours from stat modifier classes */
+.activity-icon-bubble.stat-amber {
+  background: rgba(232, 160, 32, 0.12);
+  border-color: rgba(232, 160, 32, 0.25);
+}
+.activity-icon-bubble.stat-green {
+  background: rgba(40, 168, 106, 0.12);
+  border-color: rgba(40, 168, 106, 0.25);
+}
+.activity-icon-bubble.stat-blue {
+  background: rgba(40, 120, 208, 0.12);
+  border-color: rgba(40, 120, 208, 0.25);
+}
+
+.activity-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-details h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-details p {
+  font-size: 0.78rem;
+  color: var(--white-40);
+}
+
+.activity-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.activity-time {
+  font-size: 0.72rem;
+  color: var(--white-40);
+  letter-spacing: 0.3px;
+}
+
+/* Status badges */
+.activity-badge {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+}
+
+.status-pending {
+  background: rgba(232, 160, 32, 0.12);
+  color: #f0b840;
+  border: 1px solid rgba(232, 160, 32, 0.25);
+}
+
+.status-completed {
+  background: rgba(40, 168, 106, 0.12);
+  color: #3dd68a;
+  border: 1px solid rgba(40, 168, 106, 0.25);
+}
+
+.status-rejected {
+  background: rgba(200, 30, 30, 0.12);
+  color: #e05555;
+  border: 1px solid rgba(200, 30, 30, 0.25);
+}
+
+/* ── Hover: amber glow instead of red for admin ─────────── */
+.admin-dashboard-page .glass-card:hover {
+  border-color: rgba(232, 160, 32, 0.3);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 20px rgba(232, 160, 32, 0.2);
+}
+
+.admin-dashboard-page .action-card::before {
+  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+}
+
+.admin-dashboard-page .action-arrow {
+  color: var(--amber);
+}
+
+.admin-dashboard-page .dash-stat-card.stat-red::after { background: var(--red); }
+
+/* ── Responsive extras ───────────────────────────────────── */
+@media (max-width: 600px) {
+  .activity-item {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .activity-right {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+}

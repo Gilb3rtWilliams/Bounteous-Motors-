@@ -1,0 +1,368 @@
+.my-trade-ins-page {
+  min-height: 100vh;
+  background: #111;
+}
+
+.trade-ins-main {
+  max-width: 1400px;
+  margin: 80px auto 0;
+  padding: 2.5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.trade-ins-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid #333;
+}
+
+.header-content h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.header-content p {
+  color: #888;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.new-trade-in-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 2rem;
+  background: #ff3333;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.new-trade-in-btn:hover {
+  background: #ff4d4d;
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 1.2rem;
+}
+
+.trade-ins-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.trade-in-card {
+  display: grid;
+  grid-template-columns: minmax(400px, 1fr) 1fr;
+  background: #1a1a1a;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trade-in-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.car-gallery {
+  padding: 1.5rem;
+}
+
+.main-image {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.main-image img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+}
+
+.trade-in-status {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+}
+
+.status-icon.pending {
+  color: #f1c40f;
+}
+
+.status-icon.approved {
+  color: #2ecc71;
+}
+
+.status-icon.rejected {
+  color: #e74c3c;
+}
+
+.image-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 1rem;
+}
+
+.thumbnail {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #333;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.thumbnail:hover {
+  border-color: #ff3333;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.add-photo-btn {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #222;
+  border: 2px dashed #444;
+  border-radius: 8px;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-photo-btn:hover {
+  border-color: #ff3333;
+  color: #ff3333;
+}
+
+.trade-in-details {
+  padding: 2rem;
+  border-left: 1px solid #333;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.car-info h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.trade-in-id {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.offer-badge {
+  background: #222;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.offer-label {
+  display: block;
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.offer-amount {
+  display: block;
+  color: #2ecc71;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.vehicle-specs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.spec-item .label {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.spec-item .value {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.notes-section {
+  background: #222;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.notes-section h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+}
+
+.notes-section p {
+  color: #888;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.documents-section {
+  margin-bottom: 2rem;
+}
+
+.documents-section h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+}
+
+.document-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.document-btn {
+  padding: 0.8rem 1.2rem;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.document-btn:hover {
+  background: #2a2a2a;
+  border-color: #ff3333;
+}
+
+.trade-in-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.primary-btn,
+.secondary-btn {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background: #ff3333;
+  color: #fff;
+  border: none;
+}
+
+.primary-btn:hover {
+  background: #ff4d4d;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  background: #222;
+  color: #ff3333;
+  border: 2px solid #ff3333;
+}
+
+.secondary-btn:hover {
+  background: #ff3333;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1200px) {
+  .trade-in-card {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-in-details {
+    border-left: none;
+    border-top: 1px solid #333;
+  }
+}
+
+@media (max-width: 768px) {
+  .trade-ins-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .new-trade-in-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .details-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .vehicle-specs {
+    grid-template-columns: 1fr;
+  }
+
+  .trade-in-actions {
+    flex-direction: column;
+  }
+}

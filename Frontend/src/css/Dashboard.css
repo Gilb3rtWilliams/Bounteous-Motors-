@@ -1,0 +1,693 @@
+/* ─────────────────────────────────────────────
+   BOUNTEOUS MOTORS — Dashboard.css
+   Fusion: Option B layout/structure + Option A palette
+   Palette: #111 (base) · #e60000 (red) · #ffd700 (gold) · #f0ede8 (text)
+   ───────────────────────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap");
+
+/* ── Variables ── */
+:root {
+  --bg: #111111;
+  --bg-2: #0d0d0d;
+  --bg-3: #161616;
+  --bg-4: #1e1e1e;
+  --red: #e60000;
+  --red-dim: rgba(230, 0, 0, 0.1);
+  --red-border: rgba(230, 0, 0, 0.25);
+  --gold: #ffd700;
+  --gold-dim: rgba(255, 215, 0, 0.08);
+  --text: #f0ede8;
+  --text-sec: rgba(240, 237, 232, 0.45);
+  --text-muted: rgba(240, 237, 232, 0.22);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-mid: rgba(255, 255, 255, 0.12);
+  --sidebar-w: 240px;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "DM Mono", monospace;
+  --radius: 8px;
+  --radius-lg: 14px;
+  --transition: 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ════════════════════════════════════════
+   SHELL
+════════════════════════════════════════ */
+.db-shell {
+  /* Remove display: grid and grid-template-columns */
+  display: block;
+  min-height: 100vh;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  position: relative;
+  padding-top: 64px; /* Account for fixed sidebar height */
+}
+
+/* ════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════ */
+.db-side {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+  padding-top: 64px; /* Account for fixed position */
+}
+
+/* Logo */
+.db-logo {
+  padding: 28px 24px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.db-logo-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.db-logo-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-top: 7px;
+}
+
+/* Nav */
+.db-nav {
+  flex: 1;
+  padding: 16px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.db-nav::-webkit-scrollbar {
+  width: 0;
+}
+
+.db-nav-group {
+  margin-bottom: 6px;
+}
+
+.db-nav-group-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 12px 24px 6px;
+}
+
+.db-nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 10px 24px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-sec);
+  cursor: pointer;
+  transition:
+    color var(--transition),
+    background var(--transition);
+  border-left: 2px solid transparent;
+}
+
+.db-nav-item:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.db-nav-item.active {
+  color: var(--text);
+  background: var(--red-dim);
+  border-left-color: var(--red);
+}
+
+.db-nav-icon {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.db-nav-item.active .db-nav-icon {
+  opacity: 1;
+  color: var(--red);
+}
+
+.db-nav-label {
+  flex: 1;
+}
+
+.db-nav-activeline {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 18px;
+  background: var(--red);
+  border-radius: 2px 0 0 2px;
+}
+
+/* Spacer */
+.db-side-spacer {
+  flex: 1;
+}
+
+/* User row */
+.db-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.db-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--red-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--red);
+  flex-shrink: 0;
+}
+
+.db-user-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.db-user-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.db-user-role {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.db-logout-btn {
+  background: none;
+  border: none;
+  color: var(--text-sec);
+  cursor: pointer;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: var(--radius);
+  transition:
+    color var(--transition),
+    background var(--transition);
+  flex-shrink: 0;
+}
+.db-logout-btn:hover {
+  color: #f87171;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* ════════════════════════════════════════
+   MAIN
+════════════════════════════════════════ */
+.db-main {
+  margin-left: var(--sidebar-w);
+  min-height: 64px;
+  padding: 36px 36px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Top bar ── */
+.db-topbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-start;
+  gap: 24px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.db-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.db-greeting-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4vw, 3.5rem);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.08;
+  margin-bottom: 6px;
+}
+
+.db-greeting-name em {
+  font-style: italic;
+  color: var(--red);
+}
+
+.db-greeting-sub {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text-sec);
+  letter-spacing: 0.02em;
+  min-height: 20px;
+}
+
+.db-date-block {
+  text-align: right;
+  padding-left: 28px;
+  border-left: 1px solid var(--border);
+}
+
+.db-date-day {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.db-date-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 600;
+  color: rgba(240, 237, 232, 0.06);
+  line-height: 1;
+}
+
+.db-date-month {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ── Stats row ── */
+.db-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.db-stat {
+  background: var(--bg-3);
+  padding: 24px 20px;
+  transition: background var(--transition);
+}
+
+.db-stat:hover {
+  background: var(--bg-4);
+}
+
+.db-stat.accent {
+  background: var(--bg-2);
+}
+
+.db-stat-val {
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.db-stat.accent .db-stat-val {
+  color: var(--red);
+}
+
+.db-stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-sec);
+}
+
+.db-stat-delta {
+  font-size: 11px;
+  color: #4ade80;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+/* ── Two-column body ── */
+.db-body {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.db-col {
+  background: var(--bg-3);
+  padding: 28px 24px;
+}
+
+.db-col-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.db-col-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.db-col-count {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  border-bottom: 1px solid var(--red-border);
+  padding-bottom: 2px;
+}
+
+/* ── Action cards ── */
+.db-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.db-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 13px;
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.db-action::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--red);
+  transition: width 0.35s ease;
+}
+
+.db-action:hover {
+  border-color: var(--red-border);
+  background: var(--bg-3);
+}
+
+.db-action:hover::after {
+  width: 100%;
+}
+
+.db-action-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: var(--red-dim);
+  border: 1px solid var(--red-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.db-action-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(0deg);
+}
+
+.db-action-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.db-action-desc {
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--text-sec);
+  line-height: 1.4;
+}
+
+/* ── Watchlist column ── */
+.db-watchlist-wrap {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+/* Override Watchlist child styles to match dark theme */
+.db-col-watch .watchlist-card {
+  background: var(--bg-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  margin-bottom: 10px;
+  transition: border-color var(--transition) !important;
+}
+.db-col-watch .watchlist-card:hover {
+  border-color: var(--red-border) !important;
+}
+.db-col-watch .watchlist-details h3 {
+  color: var(--text) !important;
+  font-family: var(--font-display) !important;
+  font-size: 15px !important;
+}
+.db-col-watch .watchlist-price {
+  color: var(--gold) !important;
+  font-family: var(--font-display) !important;
+  font-size: 18px !important;
+}
+.db-col-watch .view-details-btn {
+  background: transparent !important;
+  border: 1px solid var(--red-border) !important;
+  color: var(--red) !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 9px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  transition:
+    background var(--transition),
+    color var(--transition) !important;
+}
+.db-col-watch .view-details-btn:hover {
+  background: var(--red) !important;
+  color: #fff !important;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .db-body {
+    grid-template-columns: 1fr;
+  }
+  .db-col:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .db-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .db-side {
+    top: 64px;
+    height: calc(100vh - 64px);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .db-main {
+    margin-left: 0;
+    padding: 24px 20px 48px;
+  }
+  .db-topbar {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .db-date-block {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .db-actions-grid {
+    grid-template-columns: 1fr;
+  }
+  .db-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+/* ============================================================
+   BOUNTEOUS MOTORS — Admin Dashboard Extensions
+   Works in tandem with Dashboard.css
+   ============================================================ */
+
+/* Override Sidebar Active states for Admin (Gold instead of Red) */
+.admin-dashboard-page .db-nav-item.active {
+  background: var(--gold-dim);
+  border-left-color: var(--gold);
+}
+.admin-dashboard-page .db-nav-item.active .db-nav-icon {
+  color: var(--gold);
+}
+.admin-dashboard-page .db-nav-activeline {
+  background: var(--gold);
+}
+
+/* Override Action Card Hover states */
+.db-action.admin-action::after {
+  background: var(--gold);
+}
+.db-action.admin-action:hover {
+  border-color: rgba(255, 215, 0, 0.25);
+}
+.db-action-icon-wrap.admin-icon-wrap {
+  background: var(--gold-dim);
+  border-color: rgba(255, 215, 0, 0.25);
+}
+
+/* ── Recent Activity List (Replaces Watchlist) ── */
+.db-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.db-activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  transition: border-color var(--transition);
+}
+
+.db-activity-item:hover {
+  border-color: rgba(255, 215, 0, 0.25);
+}
+
+.db-activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.db-activity-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.db-activity-user {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-sec);
+}
+
+.db-activity-status {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Status Colors */
+.status-pending {
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.status-completed {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.status-rejected {
+  color: var(--red);
+  background: var(--red-dim);
+  border: 1px solid var(--red-border);
+}

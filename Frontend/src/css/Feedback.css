@@ -1,0 +1,378 @@
+/* Feedback.css */
+
+/* Page Container */
+.feedback-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  color: #eee;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Main container */
+.feedback-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Section titles */
+.feedback-container h2,
+.feedback-container h3 {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ff4c4c;
+  letter-spacing: 1px;
+}
+
+/* Feedback Form */
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.rating-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+
+.rating-group label {
+  font-weight: 500;
+  color: #ccc;
+}
+
+/* Stars */
+.stars-container {
+  display: flex;
+  gap: 0.3rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #ff4c4c;
+}
+
+.stars-container span {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.stars-container span:hover {
+  transform: scale(1.2);
+  color: #ff6666;
+}
+
+/* Suggestions textarea */
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  color: #eee;
+  resize: vertical;
+  font-size: 0.95rem;
+}
+
+.form-group textarea:focus {
+  outline: 2px solid #ff4c4c;
+  background: rgba(255,255,255,0.08);
+}
+
+/* Submit Button */
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #ff4c4c;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+  background: #e63e3e;
+  transform: translateY(-2px);
+}
+
+/* Feedback History */
+.feedback-history {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feedback-history li {
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #ff4c4c;
+  color: #ddd;
+}
+
+.feedback-history li strong {
+  color: #ff4c4c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .feedback-container {
+    padding: 1.5rem;
+  }
+
+  .rating-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .stars-container {
+    font-size: 1.2rem;
+  }
+}
+/* =====================
+   GENERAL FEEDBACK PAGE
+   ===================== */
+.feedback-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  color: #f4f4f4;
+}
+
+.feedback-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.loading-message {
+  text-align: center;
+  padding: 20px;
+}
+
+/* =====================
+   FEEDBACK CARDS
+   ===================== */
+.feedback-history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feedback-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.feedback-card:hover {
+  transform: translateY(-3px);
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.feedback-date {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.overall-rating {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ratings-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 15px;
+  margin: 10px 0;
+}
+
+.feedback-comment {
+  margin: 15px 0;
+  font-style: italic;
+  color: #ddd;
+  position: relative;
+}
+
+.quote-icon {
+  color: #ff4444;
+  margin-right: 8px;
+}
+
+/* =====================
+   STAR RATINGS
+   ===================== */
+.stars-container {
+  display: flex;
+  gap: 5px;
+  font-size: 1.2rem;
+  color: gold;
+}
+
+/* =====================
+   ADMIN RESPONSE
+   ===================== */
+.admin-response {
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(0, 128, 0, 0.2);
+  border-left: 4px solid #4caf50;
+  border-radius: 5px;
+}
+
+.admin-response h4 {
+  margin: 0 0 5px 0;
+  color: #4caf50;
+  font-size: 1rem;
+}
+
+.admin-response p {
+  margin: 0;
+  color: #e8f5e9;
+}
+
+/* Response form (if no response yet) */
+.response-form {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.response-form textarea {
+  resize: vertical;
+  min-height: 60px;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  font-size: 0.95rem;
+}
+
+.response-form .submit-button {
+  align-self: flex-end;
+  padding: 8px 16px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.response-form .submit-button:hover {
+  background: #1976d2;
+}
+
+/* =====================
+   STATUS CONTROLS
+   ===================== */
+.status-controls {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-controls label {
+  font-weight: bold;
+  color: #ccc;
+}
+
+.status-controls select {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f4f4f4;
+}
+
+.status-controls select option {
+  background: #222;
+  color: #fff;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.info-icon {
+  color: #555;
+  font-size: 14px;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 220px;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; 
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 13px;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+.review-controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0 25px;
+  padding: 10px;
+  background: transparent;
+  border-radius: 6px;
+}
+
+.review-controls label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.review-controls select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

@@ -1,0 +1,324 @@
+/* ============================================================
+   BOUNTEOUS MOTORS — Car Details (Showroom Layout)
+   ============================================================ */
+
+.cd-root {
+  --gold: #ffd700;
+  --red: #e60000;
+  --bg-dark: #0a0a0a;
+  --bg-card: #111111;
+  --border: rgba(255, 255, 255, 0.08);
+  --text-main: #f0ede8;
+  --text-muted: rgba(240, 237, 232, 0.5);
+
+  background: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding-bottom: 80px;
+  font-family: "DM Sans", sans-serif;
+}
+
+.cd-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+/* --- Navigation & Loading --- */
+.cd-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  font-family: "DM Mono", monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 40px;
+  transition: color 0.3s ease;
+}
+.cd-back-btn:hover {
+  color: var(--gold);
+}
+
+.cd-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--bg-dark);
+  color: var(--gold);
+  font-family: "DM Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+/* --- Header --- */
+.cd-header {
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 30px;
+}
+
+.cd-year-badge {
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.cd-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 10px 0 20px 0;
+}
+
+.cd-auth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+.cd-auth-badge.admin {
+  background: rgba(255, 215, 0, 0.1);
+  color: var(--gold);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+.cd-auth-badge.seller {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+/* --- Grid Layout --- */
+.cd-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* --- Left Column: Story --- */
+.cd-gallery-wrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 50px;
+}
+
+.cd-story-section {
+  margin-bottom: 50px;
+}
+
+.cd-section-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 32px;
+  color: var(--text-main);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cd-description {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(240, 237, 232, 0.7);
+  font-weight: 300;
+}
+
+/* Features */
+.cd-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.cd-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-main);
+  background: var(--bg-card);
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.cd-feature-icon {
+  color: var(--gold);
+}
+
+/* --- Right Column: Sticky Dossier --- */
+.cd-sidebar {
+  position: sticky;
+  top: 100px; /* Adjust based on your navbar height */
+}
+
+.cd-dossier-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 35px;
+  border-radius: 8px;
+}
+
+.cd-price-block {
+  margin-bottom: 30px;
+}
+
+.cd-price-label {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.cd-price-value {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 48px;
+  color: var(--gold);
+  line-height: 1;
+  margin-top: 5px;
+}
+
+/* Specs List */
+.cd-specs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.cd-spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cd-spec-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.cd-spec-label svg {
+  color: var(--red);
+}
+
+.cd-spec-data {
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+/* Performance */
+.cd-performance-block {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  margin-bottom: 30px;
+}
+
+.cd-perf-title {
+  font-family: "DM Mono", monospace;
+  font-size: 10px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.cd-perf-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+.cd-perf-item span {
+  color: var(--text-muted);
+}
+
+/* Actions */
+.cd-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cd-btn-primary,
+.cd-btn-secondary {
+  width: 100%;
+  padding: 16px;
+  font-family: "DM Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.cd-btn-primary {
+  background: var(--gold);
+  color: #000;
+  border: none;
+}
+.cd-btn-primary:hover {
+  background: #ffea00;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
+}
+
+.cd-btn-secondary {
+  background: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--border);
+}
+.cd-btn-secondary:hover {
+  border-color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .cd-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .cd-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .cd-container {
+    padding: 20px;
+  }
+  .cd-title {
+    font-size: 2.5rem;
+  }
+  .cd-price-value {
+    font-size: 36px;
+  }
+}

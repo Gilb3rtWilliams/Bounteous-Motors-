@@ -1,0 +1,369 @@
+.my-negotiations-page {
+  min-height: 100vh;
+  background: #111;
+}
+
+.negotiations-main {
+  max-width: 1400px;
+  margin: 80px auto 0;
+  padding: 2.5rem;
+  min-height: calc(100vh - 80px);
+}
+
+.negotiations-header {
+  margin-bottom: 3rem;
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid #333;
+}
+
+.header-content h1 {
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 0 0 1.5rem;
+}
+
+.stats-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #222;
+  padding: 1.2rem 2rem;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: #ff3333;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.negotiations-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.negotiation-card {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  background: #1a1a1a;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.negotiation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.car-preview {
+  position: relative;
+}
+
+.car-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.negotiation-status {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+}
+
+.status-icon.active {
+  color: #3498db;
+}
+
+.status-icon.accepted {
+  color: #2ecc71;
+}
+
+.status-icon.rejected {
+  color: #e74c3c;
+}
+
+.status-icon.expired {
+  color: #95a5a6;
+}
+
+.negotiation-details {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.car-info h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.negotiation-id {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.price-summary {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.price-item {
+  text-align: right;
+}
+
+.price-item.highlight {
+  background: #222;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.price-item .label {
+  display: block;
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.price-item .value {
+  display: block;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.price-item.highlight .value {
+  color: #2ecc71;
+}
+
+.negotiation-timeline {
+  background: #222;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.negotiation-timeline h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0 0 1.5rem;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #333;
+}
+
+.timeline-item::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff3333;
+}
+
+.timeline-content {
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.event-type {
+  color: #ff3333;
+  font-weight: 500;
+}
+
+.event-date {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.event-amount {
+  color: #2ecc71;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.event-message {
+  color: #888;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.timeline-item.buyer::after {
+  background: #3498db;
+}
+
+.timeline-item.seller::after {
+  background: #ff3333;
+}
+
+.negotiation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.offer-input {
+  display: flex;
+  gap: 1rem;
+}
+
+.offer-input input {
+  flex: 1;
+  padding: 1rem;
+  background: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.offer-input input:focus {
+  outline: none;
+  border-color: #ff3333;
+}
+
+.primary-btn,
+.secondary-btn {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn {
+  background: #ff3333;
+  color: #fff;
+  border: none;
+}
+
+.primary-btn:hover {
+  background: #ff4d4d;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  background: #222;
+  color: #ff3333;
+  border: 2px solid #ff3333;
+  width: 100%;
+}
+
+.secondary-btn:hover {
+  background: #ff3333;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1200px) {
+  .negotiation-card {
+    grid-template-columns: 1fr;
+  }
+
+  .car-preview {
+    height: 300px;
+  }
+
+  .details-header {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .price-summary {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-container {
+    flex-direction: column;
+  }
+
+  .offer-input {
+    flex-direction: column;
+  }
+
+  .price-summary {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .price-item {
+    text-align: left;
+  }
+}

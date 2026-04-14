@@ -1,0 +1,458 @@
+/* ============================================================
+   BOUNTEOUS MOTORS — Car Listings
+   Luxury Dark + Glassmorphism
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+
+/* ── Variables ───────────────────────────────────────────── */
+:root {
+  --red:           #c81e1e;
+  --red-glow:      rgba(200, 30, 30, 0.28);
+  --red-subtle:    rgba(200, 30, 30, 0.1);
+  --red-border:    rgba(200, 30, 30, 0.3);
+  --amber:         #d4920a;
+  --green:         #1f9e5f;
+  --blue:          #1e6ec8;
+  --bg-deep:       #060608;
+  --glass-border:  rgba(255,255,255,0.1);
+  --glass-border2: rgba(255,255,255,0.06);
+  --glass-bg:      rgba(255,255,255,0.04);
+  --glass-panel:   rgba(255,255,255,0.07);
+  --white:         #ffffff;
+  --white-80:      rgba(255,255,255,0.8);
+  --white-60:      rgba(255,255,255,0.6);
+  --white-40:      rgba(255,255,255,0.4);
+  --white-10:      rgba(255,255,255,0.07);
+  --font-display:  'Cormorant Garamond', serif;
+  --font-body:     'Outfit', sans-serif;
+  --radius-sm:     6px;
+  --radius-md:     12px;
+  --radius-lg:     18px;
+  --ease:          cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Root ────────────────────────────────────────────────── */
+.cl-root {
+  position: relative;
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  padding-bottom: 100px;
+}
+
+/* Slideshow fixed behind */
+.cl-root > div:first-child {
+  position: fixed !important;
+  inset: 0;
+  z-index: 0;
+}
+.cl-root > div:first-child img,
+.cl-root > div:first-child video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+}
+
+/* Overlay */
+.cl-root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(6,6,8,0.72) 0%,
+    rgba(6,6,8,0.5)  30%,
+    rgba(6,6,8,0.88) 100%
+  );
+  pointer-events: none;
+}
+
+.cl-root > *:not(div:first-child) { position: relative; z-index: 2; }
+
+/* ── Loading / Error ─────────────────────────────────────── */
+.cl-loading, .cl-error {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 100vh;
+  background: var(--bg-deep); color: var(--white-60);
+  font-family: var(--font-body); gap: 16px;
+}
+.cl-spinner {
+  width: 40px; height: 40px;
+  border: 2px solid var(--glass-border);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: cl-spin 0.9s linear infinite;
+}
+@keyframes cl-spin { to { transform: rotate(360deg); } }
+.cl-error h2 { font-family: var(--font-display); font-size: 2rem; color: var(--red); }
+
+/* ── HERO ────────────────────────────────────────────────── */
+.cl-hero {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 140px 48px 64px;
+  gap: 10px;
+  position: relative;
+}
+.cl-hero-glow {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(ellipse, rgba(200,30,30,0.13) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cl-eyebrow {
+  font-size: 0.68rem; letter-spacing: 3.5px;
+  text-transform: uppercase; color: var(--red);
+  margin-bottom: 6px;
+}
+.cl-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 400; color: var(--white);
+  line-height: 1.05; min-height: 1.2em;
+}
+.cl-hero-title::after {
+  content: '|'; color: var(--red);
+  animation: cl-blink 1s step-end infinite;
+}
+@keyframes cl-blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+.cl-hero-sub {
+  font-size: 1rem; color: var(--white-60);
+  min-height: 1.5em; margin-top: 2px;
+}
+.cl-hero-count {
+  margin-top: 6px;
+  font-size: 0.85rem; color: var(--white-40);
+}
+.cl-count-num {
+  font-family: var(--font-display);
+  font-size: 1.8rem; font-weight: 500;
+  color: var(--red); vertical-align: middle;
+  margin-right: 6px;
+}
+.cl-count-label { vertical-align: middle; }
+
+/* Search */
+.cl-search-wrap {
+  position: relative; width: 100%; max-width: 540px;
+  margin-top: 18px;
+}
+.cl-search-icon {
+  position: absolute; top: 50%; left: 18px;
+  transform: translateY(-50%);
+  color: var(--white-40); font-size: 0.85rem;
+  pointer-events: none;
+}
+.cl-search-input {
+  width: 100%;
+  padding: 15px 44px 15px 46px;
+  background: var(--glass-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  color: var(--white); font-family: var(--font-body); font-size: 0.9rem;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.cl-search-input::placeholder { color: var(--white-40); }
+.cl-search-input:focus {
+  outline: none;
+  border-color: var(--red-border);
+  box-shadow: 0 0 0 3px var(--red-subtle);
+}
+.cl-search-clear {
+  position: absolute; top: 50%; right: 16px;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: var(--white-40); font-size: 0.8rem; cursor: pointer;
+  transition: color 0.2s;
+}
+.cl-search-clear:hover { color: var(--white-80); }
+
+/* ── TOOLBAR ─────────────────────────────────────────────── */
+.cl-toolbar {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding: 0 48px 36px;
+}
+.cl-filters {
+  display: flex; align-items: center;
+  gap: 10px; flex-wrap: wrap; flex: 1;
+}
+.cl-toolbar-label {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.5px; color: var(--white-60);
+  white-space: nowrap;
+}
+.cl-toolbar-icon { color: var(--white-40); font-size: 0.85rem; }
+.cl-sort { display: flex; align-items: center; gap: 10px; }
+
+/* Shared select */
+.cl-select {
+  padding: 9px 32px 9px 14px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border2);
+  border-radius: var(--radius-sm);
+  color: var(--white-80); font-family: var(--font-body); font-size: 0.8rem;
+  cursor: pointer; appearance: none;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.3)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 11px center;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.cl-select:hover { border-color: var(--red-border); background-color: var(--red-subtle); }
+.cl-select:focus { outline: none; border-color: var(--red-border); }
+.cl-select option { background: #1a1a1e; color: var(--white); }
+
+.cl-clear-btn {
+  padding: 9px 14px; background: none;
+  border: 1px solid var(--glass-border2);
+  border-radius: var(--radius-sm);
+  color: var(--white-40); font-family: var(--font-body);
+  font-size: 0.75rem; cursor: pointer; transition: all 0.2s;
+}
+.cl-clear-btn:hover { color: var(--white-80); border-color: var(--glass-border); }
+
+/* ── Empty state ─────────────────────────────────────────── */
+.cl-empty {
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+  padding: 80px 48px; gap: 12px;
+}
+.cl-empty-icon { font-size: 2.5rem; color: var(--white-10); }
+.cl-empty h3 {
+  font-family: var(--font-display); font-size: 1.8rem;
+  font-weight: 400; color: var(--white-60);
+}
+.cl-empty p { font-size: 0.875rem; color: var(--white-40); }
+
+/* ── GRID ────────────────────────────────────────────────── */
+.cl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 22px;
+  padding: 0 48px;
+}
+
+/* ── CARD ────────────────────────────────────────────────── */
+.cl-card {
+  display: flex;
+  flex-direction: column;          /* stack image on top, body below */
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  animation: cl-fadeUp 0.55s var(--ease) both;
+}
+@keyframes cl-fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.cl-card:hover {
+  border-color: var(--red-border);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 55px rgba(0,0,0,0.55), 0 0 28px var(--red-glow);
+}
+
+/* ── Card image ──────────────────────────────────────────── */
+.cl-card-img {
+  position: relative;
+  /* Fix height so CarImageSlideshow fills it properly */
+  height: 240px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+/* Force the inner slideshow to fill the container */
+.cl-card-img > * {
+  width: 100% !important;
+  height: 100% !important;
+}
+.cl-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+/* Bottom gradient so image blends into card body */
+.cl-img-vignette {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 55%,
+    rgba(6,6,8,0.65) 100%
+  );
+}
+
+/* ── Card body ───────────────────────────────────────────── */
+.cl-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 20px 18px;
+  flex: 1;
+}
+
+/* badges — horizontal row, never stack on image */
+.cl-badge-row {
+  display: flex;
+  flex-direction: row;        /* always horizontal */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cl-badge {
+  display: inline-block;
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px;
+  white-space: nowrap;
+}
+.badge-available {
+  background: rgba(31,158,95,0.18);
+  color: #4de0a0;
+  border: 1px solid rgba(31,158,95,0.35);
+}
+.badge-reserved {
+  background: rgba(212,146,10,0.18);
+  color: #f0c060;
+  border: 1px solid rgba(212,146,10,0.35);
+}
+.badge-sold {
+  background: rgba(200,30,30,0.18);
+  color: #e06060;
+  border: 1px solid rgba(200,30,30,0.35);
+}
+.badge-admin {
+  background: rgba(200,30,30,0.12);
+  color: #e08080;
+  border: 1px solid rgba(200,30,30,0.25);
+}
+.badge-seller {
+  background: rgba(30,110,200,0.12);
+  color: #70b0f0;
+  border: 1px solid rgba(30,110,200,0.25);
+}
+
+/* title + price */
+.cl-title-row {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 10px;
+}
+.cl-car-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem; font-weight: 400;
+  color: var(--white); line-height: 1.2;
+}
+.cl-car-title em {
+  font-style: italic; color: var(--white-60);
+}
+.cl-price {
+  font-family: var(--font-display);
+  font-size: 1.25rem; font-weight: 500;
+  color: var(--amber); white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* specs */
+.cl-specs {
+  display: flex; flex-wrap: wrap; gap: 10px 14px;
+}
+.cl-spec {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; color: var(--white-40); letter-spacing: 0.2px;
+}
+.cl-spec svg { font-size: 0.72rem; color: var(--red); opacity: 0.85; }
+
+/* description */
+.cl-desc {
+  font-size: 0.8rem; color: var(--white-40);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Action buttons ──────────────────────────────────────── */
+.cl-actions {
+  display: flex; flex-direction: column; gap: 8px;
+  margin-top: auto; padding-top: 4px;
+}
+
+/* View Details + Order Now — side by side on same row */
+.cl-actions-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.cl-btn-details,
+.cl-btn-order,
+.cl-btn-watchlist {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  gap: 7px;
+  padding: 11px 0;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: 0.78rem;
+  font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s var(--ease);
+  white-space: nowrap;
+}
+
+/* Primary — red fill */
+.cl-btn-details {
+  background: var(--red); color: var(--white); border: none;
+}
+.cl-btn-details:hover {
+  background: #df2020;
+  box-shadow: 0 4px 18px var(--red-glow);
+}
+
+/* Secondary — ghost outline */
+.cl-btn-order {
+  background: transparent; color: var(--white-80);
+  border: 1px solid var(--glass-border);
+}
+.cl-btn-order:hover {
+  background: var(--white-10); border-color: rgba(255,255,255,0.3);
+}
+
+/* Watchlist — full width, dark with red heart, always visible */
+.cl-btn-watchlist {
+  background: rgba(200,30,30,0.1);
+  color: #e08080;
+  border: 1px solid var(--red-border);
+}
+.cl-btn-watchlist:hover {
+  background: rgba(200,30,30,0.22);
+  color: var(--white);
+  border-color: var(--red);
+  box-shadow: 0 4px 16px var(--red-glow);
+}
+.cl-btn-watchlist svg { font-size: 0.8rem; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .cl-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); padding: 0 28px; }
+  .cl-toolbar { padding: 0 28px 32px; }
+  .cl-hero { padding: 120px 28px 56px; }
+}
+@media (max-width: 680px) {
+  .cl-hero { padding: 110px 20px 44px; }
+  .cl-hero-title { font-size: 2.4rem; }
+  .cl-grid { grid-template-columns: 1fr; padding: 0 16px; }
+  .cl-toolbar { flex-direction: column; align-items: stretch; padding: 0 16px 28px; }
+  .cl-filters { flex-direction: column; }
+  .cl-filters .cl-select,
+  .cl-sort .cl-select { width: 100%; }
+  .cl-sort { width: 100%; justify-content: flex-start; }
+}

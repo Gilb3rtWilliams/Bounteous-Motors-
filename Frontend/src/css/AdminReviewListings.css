@@ -1,0 +1,96 @@
+.admin-review-container {
+  padding: 2rem;
+  background-color: #121212;
+  color: #f0f0f0;
+  min-height: 100vh;
+}
+
+.admin-review-container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ff4444;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.review-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  padding: 1.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.review-card:hover {
+  box-shadow: 0 0 8px #ff4444;
+}
+
+.review-header h3 {
+  margin: 0 0 0.5rem;
+  color: #fff;
+}
+
+.review-body p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.review-images {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.car-thumbnail {
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #555;
+}
+
+.review-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.approve-btn,
+.reject-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.approve-btn {
+  background: #28a745;
+}
+
+.reject-btn {
+  background: #dc3545;
+}
+
+.no-pending {
+  text-align: center;
+  color: #999;
+  font-size: 1.2rem;
+}
+
+.admin-review-loading {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.2rem;
+  color: #ccc;
+}

@@ -1,0 +1,136 @@
+/* =============== Review Page =============== */
+.reviews-page, .review-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.reviews-container, .review-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: transparent;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-container h2,
+.review-container h2 {
+  font-size: 1.8rem;
+  color: red;
+  margin-bottom: 1rem;
+  border-left: 5px solid #e63946;
+  padding-left: 10px;
+}
+
+/* =============== Review Form =============== */
+.review-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.review-form label {
+  font-weight: bold;
+  color: red;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.review-form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.submit-button {
+  background: #e63946;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.submit-button:hover {
+  background: #b71c1c;
+}
+
+/* =============== Stars =============== */
+.stars-container {
+  display: flex;
+  gap: 4px;
+  font-size: 1.3rem;
+  color: gold;
+}
+
+.star {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.star:hover {
+  transform: scale(1.2);
+}
+
+/* =============== Review Card =============== */
+.review-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: transparent;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  color: red;
+  margin-bottom: 0.5rem;
+}
+
+.review-card p {
+  margin: 0.5rem 0;
+  color: white;
+}
+
+.verified-badge {
+  background: #28a745;
+  color: white;
+  font-size: 0.8rem;
+  padding: 3px 7px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+/* =============== Review Actions =============== */
+.review-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.review-actions button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #555;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+
+.review-actions button:hover {
+  color: #e63946;
+}
